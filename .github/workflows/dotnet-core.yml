@@ -4,19 +4,18 @@ on:
   push:
     branches:
     - master
-    - release/*
 
 jobs:
-  build_icolors:
+  build:
     runs-on: ubuntu-16.04
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v1
     - name: Build and deploy the Docker image
       env: 
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         APP_NAME: ${{ 'tl-shopping-app' }}
       run: |
-        cd ./iceStorm/$APP_NAME
+        cd ./src/App
         docker login --username=icestorm3675 --password=$HEROKU_API_KEY registry.heroku.com
         heroku container:push web -a $APP_NAME
         heroku container:release web -a $APP_NAME
