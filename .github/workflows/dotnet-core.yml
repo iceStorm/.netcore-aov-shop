@@ -1,28 +1,21 @@
-name: .NET Core
+name: CI
 
 on:
-  	push:
-    	branches: [ master ]
-  	pull_request:
-    	branches: [ master ]
+  push:
+    branches:
+    - master
+    - release/*
 
 jobs:
-  	build:
-		  runs-on: ubuntu-latest
-
-      steps:
-      - uses: actions/checkout@v2
-      - name: Build and deploy the Docker image
-
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.301
-
+  build_icolors:
+    runs-on: ubuntu-lastest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and deploy the Docker image
       env: 
         HEROKU_API_KEY: ${{ cbaa19f7-4b2c-4f4c-a5a9-830ea1b11b5f }}
         APP_NAME: ${{ 'tl-shopping-app' }}
-      
-      run:
+      run: |
         cd ./iceStorm/$APP_NAME
         docker login --username=icestorm3675 --password=$HEROKU_API_KEY registry.heroku.com
         heroku container:push web -a $APP_NAME
