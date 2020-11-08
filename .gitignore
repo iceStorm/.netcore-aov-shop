@@ -1,3 +1,5 @@
 .vs
-**/bin
-**/obj
+App/bin
+App/obj
+UnitTester/obj
+UnitTester/bin
