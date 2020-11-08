@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build and deploy the Docker image
       env: 
-        HEROKU_API_KEY: ${{ cbaa19f7-4b2c-4f4c-a5a9-830ea1b11b5f }}
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         APP_NAME: ${{ 'tl-shopping-app' }}
       run: |
         cd ./iceStorm/$APP_NAME
