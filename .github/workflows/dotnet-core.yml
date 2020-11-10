@@ -15,7 +15,7 @@ jobs:
     - name: Build and deploy the Docker image
       env: 
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        APP_NAME: ${{ 'tl-shopping-app' }}
+        APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
       run: |
         docker login --username=icestorm3675 --password=$HEROKU_API_KEY registry.heroku.com
         heroku container:push web -a $APP_NAME
