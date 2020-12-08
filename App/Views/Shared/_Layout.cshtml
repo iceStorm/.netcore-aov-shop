@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0" />
+
+    <link href="~/libs/snackbar-notifier/css/snackbar.css" rel="stylesheet" />
+    <script src="~/libs/snackbar-notifier/js/snackbar.js"></script>
+
+
+    <link rel="icon" type="image/x-icon" href="~/fav-icon.png" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+
+
+    @if (TempData["message"] != null)
+    {
+        <snackbar></snackbar>
+        <script>
+            const snackbar = new SnackBar;
+
+            snackbar.make("message", [
+
+                // message
+                "@TempData["message"]",
+
+                // action text
+                null,
+
+                // vertical position
+                "bottom",
+
+                // horizontal position
+                "center"
+
+            ], 5000);
+        </script>
+    }
+
+</body>
+</html>

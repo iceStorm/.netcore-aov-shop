@@ -2,9 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.Models;
+using App.Repositories;
+using App.Repositories.DbContexts;
+using App.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -12,13 +19,51 @@ namespace App
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        private IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
         {
+            Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddDbContext<AppDbContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("Local"));
+            });
+
+
+
+            /* add identity - authentication */
+            services.AddIdentityCore<UserAccount>(opt => {
+                opt.User.RequireUniqueEmail = true;
+                opt.SignIn.RequireConfirmedEmail = true;
+                opt.Password.RequireNonAlphanumeric = false;
+            })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddSignInManager<SignInManager<UserAccount>>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(IdentityConstants.ApplicationScheme)
+                .AddCookie(IdentityConstants.ApplicationScheme, config =>
+                {
+                    config.Cookie.Name = "LoginCookie";
+                    config.LoginPath = "/Account/Login";
+                    config.LogoutPath = "/Account/Logout";
+                    config.AccessDeniedPath = "/Account/AccessDenied";
+                });
+
+
+
+            services.AddMvc(opts => opts.EnableEndpointRouting = false);
+            services.AddTransient<IGameAccountRepo, GameAccountRepo>();
+        }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -26,14 +71,17 @@ namespace App
                 app.UseDeveloperExceptionPage();
             }
 
+
+            app.UseRouting();
+            app.UseStaticFiles();
+            app.UseHttpsRedirection();
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+
+            app.UseMvc(routes => {
+                routes.MapRoute(name: null, template: "", defaults: new { controller = "Home", action = "Index" });
+                routes.MapRoute(name: null, template: "Admin", defaults: new { controller = "Admin", action = "Index" });
+                routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
         }
     }
