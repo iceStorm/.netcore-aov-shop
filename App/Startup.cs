@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +30,7 @@ namespace App
 
         public void ConfigureServices(IServiceCollection services)
         {
-            addSeedData(services);
+            AddSeedData(services);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -62,14 +62,15 @@ namespace App
                     config.LogoutPath = "/Account/Logout";
                     config.AccessDeniedPath = "/Account/AccessDenied";
                 });
-
+            services.AddAuthorization();
 
 
             services.AddMvc(opts => opts.EnableEndpointRouting = false);
             services.AddTransient<IGameAccountRepo, GameAccountRepo>();
+            services.AddTransient<IUserAccountRepo, UserAccountRepo>();
         }
 
-        private void addSeedData(IServiceCollection services)
+        private void AddSeedData(IServiceCollection services)
         {
             var adminAccount = Configuration.GetSection("AdminAccount").Get<AdminSeedAccount>();
             services.AddSingleton(adminAccount);
@@ -89,17 +90,19 @@ namespace App
             app.UseRouting();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
-            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
 
             app.UseMvc(routes => {
                 routes.MapRoute(name: null, template: "", defaults: new { controller = "Home", action = "Index" });
-                routes.MapRoute(name: null, template: "Admin", defaults: new { controller = "Admin", action = "Index" });
+                routes.MapRoute(name: null, template: "Dashboard", defaults: new { controller = "Admin", action = "Dashboard" });
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
 
 
             AppDbContext.SeedData(app.ApplicationServices).Wait();
         }
+
     }
 }

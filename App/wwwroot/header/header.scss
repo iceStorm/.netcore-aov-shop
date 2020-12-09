@@ -162,3 +162,168 @@
         }
     }
 }
+
+
+#header #right-side {
+    > #chb-user-dropdown {
+        position: absolute;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+
+        &:checked {
+            & + #user-area > #user-dropdown {
+                display: block;
+            }
+        }
+    }
+
+    > #user-area {
+        user-select: none;
+        cursor: pointer;
+        position: relative;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        column-gap: 15px;
+        padding: 5px 30px 5px 10px;
+
+        transition: all 0.25s ease-in-out;
+        background: rgb(245, 245, 245);
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        color: #004a90;
+        // font-weight: bold;
+
+
+        &:after {
+            content: '';
+
+            position: absolute;
+            top: 50%;
+            right: 10px;
+
+            border-top: 4px solid #004a90;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+        }
+
+        > #user-avatar {
+            width: 30px;
+            height: 30px;
+
+            border-radius: 50%;
+            border: 1px solid #ccc;
+        }
+
+
+        $dropdown-top: 56px;
+        $dropdown-radius: 6px;
+        $dropdown-size: 10px;
+        $dropdown-right: 10px;
+        $item-hover-background: rgb(248, 248, 248);
+        > #user-dropdown {
+            display: none;
+            width: max-content;
+            list-style-type: none;
+
+            position: absolute;
+            top: $dropdown-top;
+            right: 0;
+            z-index: 9999;
+
+            background: #fff;
+            border-radius: $dropdown-radius;
+            border: 1px solid #ddd;
+            box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.027);
+
+
+            &.first-item-hovered {
+                &::before {
+                    border-bottom-color: $item-hover-background;
+                }
+            }
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: -$dropdown-size;
+                right: $dropdown-right + 1.5px;
+                z-index: 99;
+
+                border-bottom: $dropdown-size solid #fff;
+                border-left: $dropdown-size solid transparent;
+                border-right: $dropdown-size solid transparent;
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                top: -($dropdown-size + 1px);
+                right: $dropdown-right;
+                z-index: 98;
+
+                border-bottom: ($dropdown-size + 1px) solid #ddd;
+                border-left: ($dropdown-size + 1.5px) solid transparent;
+                border-right: ($dropdown-size + 1.5px) solid transparent;
+            }
+
+
+            > .user-dropdown-item {
+                list-style-type: none;
+                width: 100%;
+                display: block;
+                flex-direction: row;
+                justify-content: stretch;
+                align-items: center;
+                border: none;
+
+
+                > .user-dropdown-link {
+                    font-size: 16px;
+                    font-weight: 450;
+                    text-decoration: none;
+                    display: block;
+                    padding: 15px;
+                    border: none;
+                    color: #004a90;
+
+                    &:hover {
+                        background: $item-hover-background;
+                    }
+
+                    > i {
+                        font-size: 20px;
+                        transform: translateY(-2px);
+                        vertical-align: middle;
+                    }
+
+                    > p {
+                        margin-left: 15px;
+                        display: inline-block;
+                        vertical-align: middle;
+                    }
+                }
+                
+
+                &:first-child {
+                    border-bottom: 1px solid rgb(226, 226, 226);
+                    > .user-dropdown-link {
+                        border-top-left-radius: $dropdown-radius;
+                        border-top-right-radius: $dropdown-radius;
+                    }
+                }
+                &:last-child {
+                    border-top: 1px solid rgb(226, 226, 226);
+
+                    > .user-dropdown-link {
+                        color: crimson;
+                        border-bottom-left-radius: $dropdown-radius;
+                        border-bottom-right-radius: $dropdown-radius;
+                    }
+                }
+            }
+        }
+    }   // user-area
+}

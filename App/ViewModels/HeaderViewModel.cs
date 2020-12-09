@@ -12,6 +12,8 @@ namespace App.ViewModels
         public IQueryable<Rank> Ranks { get; set; }
 
         public UserAccount User { get; set; }
+        public string Role { get; set; }
+
 
     }
 }

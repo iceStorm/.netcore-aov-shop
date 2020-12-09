@@ -5,21 +5,29 @@ using System.Threading.Tasks;
 using App.Infrastructures;
 using App.Models;
 using App.ViewModels;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 
 namespace App.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private MailkitMetaData mailkitMetadata;
+        private RoleManager<IdentityRole> roleManager;
         private UserManager<UserAccount> userManager;
         private SignInManager<UserAccount> signInManager;
 
-        public AccountController(UserManager<UserAccount> userManager, SignInManager<UserAccount> signInManager)
+        public AccountController(MailkitMetaData mailkitMetadata, 
+            RoleManager<IdentityRole> roleManager, UserManager<UserAccount> userManager, 
+            SignInManager<UserAccount> signInManager)
         {
+            this.mailkitMetadata = mailkitMetadata;
+            this.roleManager = roleManager;
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
@@ -34,14 +42,37 @@ namespace App.Controllers
 
         public IActionResult AccessDenied(string returnUrl)
         {
-            return View(returnUrl);
+            TempData["returnUrl"] = returnUrl;
+            return View();
         }
 
+
+
+        #region Main functions
         public async Task<IActionResult> Profile()
         {
             var currentUser = await userManager.GetUserAsync(HttpContext.User);
             return View(currentUser);
         }
+
+
+        /*[Authorize(Roles = Constants.ClientRole)]
+        public async Task<IActionResult> ReCharge()
+        {
+            var currentUser = await userManager.GetUserAsync(HttpContext.User);
+            return View(currentUser);
+        }*/
+
+
+        [Authorize(Roles = Constants.ClientRole)]
+        public async Task<IActionResult> BoughtHistory()
+        {
+            var currentUser = await userManager.GetUserAsync(HttpContext.User);
+            return View(currentUser);
+        }
+        #endregion
+
+
 
 
 
@@ -73,7 +104,7 @@ namespace App.Controllers
                         if (await userManager.IsInRoleAsync(user, Constants.ClientRole))
                             return Redirect("/");
                         else
-                            return Redirect("/Admin");
+                            return Redirect("/Dashboard");
                     }
                     else
                     {
@@ -118,8 +149,8 @@ namespace App.Controllers
             if (ModelState.IsValid)
             {
 
-                var user = await userManager.FindByEmailAsync(viewModel.Email);
-                if (user != null)
+                var client = await userManager.FindByEmailAsync(viewModel.Email);
+                if (client != null)
                 {
                     TempData["message"] = "E-mail đã tồn tại";
                 }
@@ -127,18 +158,73 @@ namespace App.Controllers
                 {
 
                     // init new Client model --> create
-                    user = new UserAccount {
+                    client = new UserAccount {
                         UserName = viewModel.Email,
                         Email = viewModel.Email,
                         SurName = viewModel.User.SurName,
                         FirstName = viewModel.User.FirstName
                     };
 
-                    var createResult = await userManager.CreateAsync(user, viewModel.Password);
+
+                    var createResult = await userManager.CreateAsync(client, viewModel.Password);
                     if (createResult.Succeeded)
                     {
-                        TempData["message"] = "Vui lòng kiểm tra E-mail dể kích hoạt tài khoản !";
-                        return RedirectToAction(nameof(Login));
+                        var roleExisted = true;
+
+                        /* check and add new role if needed */
+                        if (await roleManager.RoleExistsAsync(Constants.ClientRole) == false)
+                        {
+                            var createRoleResult = await roleManager.CreateAsync(new IdentityRole(Constants.ClientRole));
+                            roleExisted = createRoleResult.Succeeded == true;
+                        }
+
+
+
+                        if (roleExisted)
+                        {
+                            var addRoleResult = await userManager.AddToRoleAsync(client, Constants.ClientRole);
+                            if (addRoleResult.Succeeded)
+                            {
+
+                                /* generate confirmationUrl that will be contained in the email */
+                                var tokenString = await userManager.GenerateEmailConfirmationTokenAsync(client);
+                                var confirmationUrl = Url.Action(
+                                    nameof(ConfirmEmail),
+                                    "Account",
+                                    new { token = tokenString, email = client.Email },
+                                    Request.Scheme
+                                );
+
+
+                                /* send the mail */
+                                var emailMessage = new MailkitMessage
+                                {
+                                    Subject = "ShopAOV.vn - Xác minh Tài khoản",
+                                    Content = confirmationUrl,
+                                    Sender = new MailboxAddress(mailkitMetadata.Sender),
+                                    Receiver = new MailboxAddress(client.Email)
+                                };
+
+
+
+                                using (SmtpClient smtpClient = new SmtpClient())
+                                {
+                                    smtpClient.Connect(mailkitMetadata.SmtpServer, mailkitMetadata.Port, true);
+                                    smtpClient.Authenticate(mailkitMetadata.UserName, mailkitMetadata.Password);
+                                    smtpClient.Send(emailMessage.GetMimeMessage());
+                                    smtpClient.Disconnect(true);
+                                }
+
+
+                                TempData["message"] = "Vui lòng kiểm tra E-mail để kích hoạt tài khoản !";
+                                return RedirectToAction(nameof(Login));
+                            }   //  addRole
+
+                        }   // roleExisted
+
+
+                        TempData["message"] = "Có lỗi trong quá trình Đăng ký !";
+                        return View();
                     }
                     else
                     {
@@ -158,6 +244,26 @@ namespace App.Controllers
 
 
             return View(viewModel);
+        }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        {
+
+            var client = await userManager.FindByEmailAsync(email);
+            if (client != null)
+            {
+                var confirmResult = await userManager.ConfirmEmailAsync(client, token);
+                if (confirmResult.Succeeded)
+                {
+                    return View(true);
+                }
+            }
+
+
+            return View(false);
         }
         #endregion
 

@@ -10,14 +10,28 @@ namespace App.Models
 {
     public class GameAccount
     {
+        public bool Sold { get; set; } = false; //  Đã bán
 
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập Tên đăng nhập cho tài khoản")]
+        public string LoginName { get; set; }
 
 
-        public bool Sold { get; set; } = false; //  Đã bán
+        [Required(ErrorMessage = "Vui lòng nhập đơn giá cho tài khoản")]
+        public int Price { get; set; }
+
+
+        [Required(ErrorMessage = "Vui lòng nhập Mật khẩu cho tài khoản")]
+        public string Password { get; set; }
+
+
+        [Required(ErrorMessage = "Vui lòng nhập Mật khẩu xác nhận cho tài khoản")]
+        [Compare("Password", ErrorMessage = "Mật khẩu xác nhận không khớp")]
+        [NotMapped]
+        public string ConfirmPassword { get; set; }
+
+
 
 
         [NotMapped]
@@ -67,9 +81,10 @@ namespace App.Models
 
 
 
-        public void Copy(GameAccount source)
+        public void CopyValues(GameAccount source)
         {
-            Id = source.Id;
+            Price = source.Price;
+            Password = source.Password;
             Sold = source.Sold;
             ImageUrlsList = source.ImageUrlsList;
             ImageUrls = source.ImageUrls;

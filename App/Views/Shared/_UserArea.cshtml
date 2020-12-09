@@ -1,3 +1,68 @@
-﻿@model UserAccount
+﻿@model HeaderViewModel
 
 
+
+<input type="checkbox" id="chb-user-dropdown" />
+
+<label id="user-area" for="chb-user-dropdown">
+    <img src="@(Model.User.AvatarUrl ?? Url.Content("~/user-avatars/default-user.png"))" id="user-avatar" />
+    <span>@Model.User.SurName @Model.User.FirstName</span>
+
+
+    <ul id="user-dropdown">
+        <li class="user-dropdown-item">
+            <a class="user-dropdown-link" asp-controller="Account" asp-action="Profile">
+                <i class="nc-icon nc-briefcase-24"></i>
+                <p>Hồ sơ của tôi</p>
+            </a>
+        </li>
+
+
+
+        @if (Model.Role == Constants.AdminRole)
+        {
+            <li class="user-dropdown-item">
+                <a class="user-dropdown-link" asp-controller="Admin" asp-action="GameAccounts">
+                    <i class="nc-icon nc-layers-3"></i>
+                    <p>Quản lý Tài khoản Game</p>
+                </a>
+            </li>
+            <li class="user-dropdown-item">
+                <a class="user-dropdown-link" asp-controller="Admin" asp-action="AdminAccounts">
+                    <i class="nc-icon nc-award-48"></i>
+                    <p>Quản lý Tài khoản Admin</p>
+                </a>
+            </li>
+            <li class="user-dropdown-item">
+                <a class="user-dropdown-link" asp-controller="Admin" asp-action="ClientAccounts">
+                    <i class="nc-icon nc-multiple-11"></i>
+                    <p>Danh sách Khách hàng</p>
+                </a>
+            </li>
+        }
+        else
+        {
+            @*<li class="user-dropdown-item">
+                <a class="user-dropdown-link" asp-controller="Account" asp-action="ReCharge">
+                    <i class="nc-icon nc-wallet-43"></i>
+                    <p>Nạp tiền vào Ví</p>
+                </a>
+            </li>*@
+            <li class="user-dropdown-item">
+                <a class="user-dropdown-link" asp-controller="Account" asp-action="BoughtHistory">
+                    <i class="nc-icon nc-check-circle-07"></i>
+                    <p>Tài khoản đã mua</p>
+                </a>
+            </li>
+        }
+
+
+
+        <li class="user-dropdown-item">
+            <a class="user-dropdown-link" asp-controller="Account" asp-action="LogOut">
+                <i class="nc-icon nc-lock-open"></i>
+                <p>Đăng xuất</p>
+            </a>
+        </li>
+    </ul>
+</label>

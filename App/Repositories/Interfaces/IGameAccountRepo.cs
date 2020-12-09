@@ -10,6 +10,6 @@ namespace App.Repositories.Interfaces
     {
         public IQueryable<GameAccount> Accounts { get; }
         void SaveGameAccount(GameAccount account);
-        bool DeleteGameAccount(int gameAccountId);
+        bool DeleteGameAccount(string loginName);
     }
 }

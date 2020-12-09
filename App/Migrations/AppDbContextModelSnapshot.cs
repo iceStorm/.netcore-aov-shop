@@ -21,10 +21,8 @@ namespace App.Migrations
 
             modelBuilder.Entity("App.Models.GameAccount", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<string>("LoginName")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("GemStonesCount")
                         .HasColumnType("int");
@@ -41,6 +39,13 @@ namespace App.Migrations
                     b.Property<string>("ImageUrls")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
 
                     b.Property<string>("RankName")
                         .IsRequired()
@@ -61,7 +66,7 @@ namespace App.Migrations
                     b.Property<string>("UserAccountId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("LoginName");
 
                     b.HasIndex("RankName");
 

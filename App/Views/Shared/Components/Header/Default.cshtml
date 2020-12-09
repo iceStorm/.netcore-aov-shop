@@ -80,7 +80,7 @@
         
         @if (Model.User != null)
         {
-            @await Html.PartialAsync("_UserArea", Model.User)
+            @await Html.PartialAsync("_UserArea", Model)
         }
         else
         {

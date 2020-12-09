@@ -28,5 +28,13 @@ namespace App.Models
 
         public int TotalMoney { get; set; } = 0;   //  Số tiền trong Tài khoản ảo
 
+
+        
+        public void PasteValues(UserAccount source)
+        {
+            source.SurName = this.SurName;
+            source.FirstName = this.FirstName;
+            source.AvatarUrl = this.AvatarUrl;
+        }
     }
 }

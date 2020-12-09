@@ -103,6 +103,9 @@ namespace App.Repositories.DbContexts
                     context.GameAccounts.AddRange(
                         new GameAccount {
                             ImageUrls = "a",
+                            Price = 1000000,
+                            LoginName = "muasaobang",
+                            Password = "abc",
                             RankName = "Kim Cương",
                             GoldsCount = 10000,
                             RubiesCount = 500,
@@ -111,6 +114,9 @@ namespace App.Repositories.DbContexts
                         },
                         new GameAccount
                         {
+                            Price = 2400000,
+                            LoginName = "muasaobang1",
+                            Password = "abc",
                             ImageUrls = "a",
                             RankName = "Bạch Kim",
                             GoldsCount = 10000,
@@ -119,6 +125,9 @@ namespace App.Repositories.DbContexts
                             HeroesCount = 75
                         }, new GameAccount
                         {
+                            Price = 700000,
+                            LoginName = "muasaobang2",
+                            Password = "abc",
                             ImageUrls = "a",
                             RankName = "Tinh Anh",
                             GoldsCount = 10000,
@@ -127,6 +136,9 @@ namespace App.Repositories.DbContexts
                             HeroesCount = 75
                         }, new GameAccount
                         {
+                            Price = 300000,
+                            LoginName = "muasaobang3",
+                            Password = "abc",
                             ImageUrls = "a",
                             RankName = "Vàng",
                             GoldsCount = 10000,
@@ -135,6 +147,9 @@ namespace App.Repositories.DbContexts
                             HeroesCount = 75
                         }, new GameAccount
                         {
+                            Price = 120000,
+                            LoginName = "muasaobang4",
+                            Password = "abc",
                             ImageUrls = "a",
                             RankName = "Kim Cương",
                             GoldsCount = 10000,

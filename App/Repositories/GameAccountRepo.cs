@@ -22,9 +22,9 @@ namespace App.Repositories
 
         public IQueryable<GameAccount> Accounts => dbContext.GameAccounts.Include(ga => ga.Rank);
 
-        public bool DeleteGameAccount(int gameAccountId)
+        public bool DeleteGameAccount(string loginName)
         {
-            var gameAcc = dbContext.GameAccounts.Where(acc => acc.Id == gameAccountId).FirstOrDefault();
+            var gameAcc = dbContext.GameAccounts.Where(acc => acc.LoginName == loginName).FirstOrDefault();
             if (gameAcc != null)
             {
                 dbContext.GameAccounts.Remove(gameAcc);
@@ -36,16 +36,15 @@ namespace App.Repositories
 
         public void SaveGameAccount(GameAccount account)
         {
-            if (account.Id == 0)
-            {
-                dbContext.GameAccounts.Add(account);
-            }
-
-
-            var accEntry = dbContext.GameAccounts.FirstOrDefault(acc => acc.Id == account.Id);
+            var accEntry = dbContext.GameAccounts.FirstOrDefault(acc => acc.LoginName == account.LoginName);
             if (accEntry != null)
             {
-                accEntry.Copy(account);
+                accEntry.CopyValues(account);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                dbContext.GameAccounts.Add(accEntry);
                 dbContext.SaveChanges();
             }
         }

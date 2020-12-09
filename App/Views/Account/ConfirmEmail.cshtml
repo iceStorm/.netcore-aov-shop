@@ -1,0 +1,25 @@
+﻿@model bool
+
+@{
+    Layout = null;
+    ViewBag.Title = "Xác minh Tài khoản";
+}
+
+
+<link href="~/libs/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<script src="~/libs/bootstrap/js/dist/popover.js"></script>
+<script src="~/libs/bootstrap/dist/js/bootstrap.js"></script>
+
+
+<div class="container center">
+    @if (Model)
+    {
+        <p class="alert alert-success">Thành công! Bây giờ bạn có thể Đăng nhập và sử dụng các dịch vụ.</p>
+        <a class="btn btn-primary mt-4" asp-controller="Home" asp-action="Index">Về Trang Chủ</a>
+    }
+    else
+    {
+        <p class="alert alert-danger">Thất bại! Vui lòng Đăng ký lại hoặc liên hệ Quản trị viên.</p>
+        <a class="btn btn-primary mt-4" asp-controller="Home" asp-action="Index">Về Trang Chủ</a>
+    }
+</div>

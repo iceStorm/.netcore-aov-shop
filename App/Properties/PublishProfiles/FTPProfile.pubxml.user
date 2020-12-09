@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAwnDrqb6wP0WViAo/7qJq+QAAAAACAAAAAAAQZgAAAAEAACAAAAAbYYlMjq62O9AruA/DywbMTbilfiLwJdaWcdQcqxdh0wAAAAAOgAAAAAIAACAAAAChvojbyPQ8sUFR79iLzkPQnSMweSp2eEoV3T6dG6Pi7iAAAABMy/bN+cDFZAQFLTuniw6HUw8nzgL4KtWxmII2330s5UAAAADG1nuivCIms6XpxecqoM767NyiHJNZSIUF78cXeqLgb6dVF+7YDKtmBJ4MtsOSqzKS7nLj2BtwhYXl/WlEhp68</EncryptedPassword>
+    <_PublishTargetUrl>https://icestorm-001-site1.itempurl.com:8172/MsDeploy.axd?site=icestorm-001-site1/icestorm-001-site1</_PublishTargetUrl>
+  </PropertyGroup>
+</Project>

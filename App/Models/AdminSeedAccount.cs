@@ -11,6 +11,7 @@ namespace App.Models
 
         public UserAccount ToUserAccount()
         {
+            this.EmailConfirmed = true;
             this.UserName = this.Email;
             return this;
         }

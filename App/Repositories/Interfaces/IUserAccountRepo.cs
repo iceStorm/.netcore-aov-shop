@@ -8,6 +8,8 @@ namespace App.Repositories.Interfaces
 {
     public interface IUserAccountRepo
     {
-        IQueryable<UserAccount> Accounts { get; }
+        IQueryable<UserAccount> Accounts(string roleType);
+        void SaveAccount(UserAccount account);
+        bool DeleteAccount(UserAccount account);
     }
 }
