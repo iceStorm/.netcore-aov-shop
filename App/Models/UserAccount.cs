@@ -19,7 +19,6 @@ namespace App.Models
         public string FirstName { get; set; }
 
 
-        [Required(ErrorMessage = "Vui lòng chọn Ảnh đại diện")]
         public string AvatarUrl { get; set; }
 
 

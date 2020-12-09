@@ -77,7 +77,12 @@ namespace App.Controllers
                     }
                     else
                     {
-                        TempData["message"] = "Mật khẩu không chính xác.";
+                        if (loginResult.IsNotAllowed)
+                            TempData["message"] = "Tài khoản chưa được xác thực.";
+                        else
+                        {
+                            TempData["message"] = "Mật khẩu không chính xác.";
+                        }
                     }
                 }
                 else
@@ -123,6 +128,7 @@ namespace App.Controllers
 
                     // init new Client model --> create
                     user = new UserAccount {
+                        UserName = viewModel.Email,
                         Email = viewModel.Email,
                         SurName = viewModel.User.SurName,
                         FirstName = viewModel.User.FirstName
@@ -131,12 +137,17 @@ namespace App.Controllers
                     var createResult = await userManager.CreateAsync(user, viewModel.Password);
                     if (createResult.Succeeded)
                     {
-                        TempData["message"] = "Đăng ký Tài khoản thành công !";
+                        TempData["message"] = "Vui lòng kiểm tra E-mail dể kích hoạt tài khoản !";
                         return RedirectToAction(nameof(Login));
                     }
                     else
                     {
-                        TempData["message"] = "Có lỗi trong quá trình Đăng ký";
+                        if (createResult.Errors.Any(err => err.Code == "PasswordTooShort"))
+                            TempData["message"] = "Mật khẩu phải có ít nhất 6 kí tự";
+                        else
+                        {
+                            TempData["message"] = "Có lỗi trong quá trình Đăng ký";
+                        }
                     }
                 }
             }

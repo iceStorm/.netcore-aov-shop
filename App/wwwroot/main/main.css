@@ -22,6 +22,7 @@ ul {
 #content {
   overflow-y: auto;
   padding: 25px var(--paddingX);
+  background: #fdfdfd;
   position: fixed;
   top: 0;
   left: 0;
@@ -144,6 +145,7 @@ ul {
 #content {
   overflow-y: auto;
   padding: 25px var(--paddingX);
+  background: #fdfdfd;
   position: fixed;
   top: 0;
   left: 0;

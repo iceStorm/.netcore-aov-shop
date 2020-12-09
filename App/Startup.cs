@@ -30,6 +30,8 @@ namespace App
 
         public void ConfigureServices(IServiceCollection services)
         {
+            addSeedData(services);
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddDbContext<AppDbContext>(options => {
@@ -43,6 +45,9 @@ namespace App
                 opt.User.RequireUniqueEmail = true;
                 opt.SignIn.RequireConfirmedEmail = true;
                 opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireLowercase = false;
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
@@ -64,6 +69,15 @@ namespace App
             services.AddTransient<IGameAccountRepo, GameAccountRepo>();
         }
 
+        private void addSeedData(IServiceCollection services)
+        {
+            var adminAccount = Configuration.GetSection("AdminAccount").Get<AdminSeedAccount>();
+            services.AddSingleton(adminAccount);
+
+            var smtpAccount = Configuration.GetSection("SmtpAccount").Get<MailkitMetaData>();
+            services.AddSingleton(smtpAccount);
+        }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -83,6 +97,9 @@ namespace App
                 routes.MapRoute(name: null, template: "Admin", defaults: new { controller = "Admin", action = "Index" });
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
+
+
+            AppDbContext.SeedData(app.ApplicationServices).Wait();
         }
     }
 }
