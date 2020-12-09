@@ -7,10 +7,10 @@
   <ItemGroup>
     <Folder Include="Infrastructures\Extensions\" />
     <Folder Include="Migrations\" />
-    <Folder Include="wwwroot\AccountPhotos\" />
-    <Folder Include="wwwroot\ClientAvatars\" />
+    <Folder Include="wwwroot\game-account-photos\" />
+    <Folder Include="wwwroot\client-avatars\" />
     <Folder Include="wwwroot\libs\" />
-    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\rank-photos\" />
   </ItemGroup>
 
   <ItemGroup>

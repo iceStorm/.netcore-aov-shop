@@ -98,6 +98,7 @@ namespace App.Controllers
 
 
         #region SignUp
+        [AllowAnonymous]
         public IActionResult SignUp()
         {
             return View(new SignUpViewModel());

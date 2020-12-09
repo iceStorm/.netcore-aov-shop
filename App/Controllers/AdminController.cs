@@ -15,5 +15,12 @@ namespace App.Controllers
         {
             return View();
         }
+
+
+        public async Task<IActionResult> Import()
+        {
+            return View();
+        }
+
     }
 }

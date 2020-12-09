@@ -1,1 +1,55 @@
-﻿
+﻿@model SignUpViewModel
+
+@{
+    Layout = "_LoginLayout";
+    ViewBag.Title = "Đăng ký";
+}
+
+
+
+<div class="page-wrapper bg-gra-02 font-poppins">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="card-body">
+                <h2 class="title">Đăng ký Tài khoản</h2>
+                <form method="POST" asp-controller="Account" asp-action="SignUp">
+                    <div class="row row-space">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Họ</label>
+                                <input class="input--style-4" type="text" asp-for="User.SurName" required>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Tên lót và Tên</label>
+                                <input class="input--style-4" type="text" asp-for="User.FirstName" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label class="label">Email</label>
+                        <input class="input--style-4" type="email" asp-for="User.Email" required>
+                    </div>
+                    <div class="row row-space">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Mật khẩu</label>
+                                <input class="input--style-4" type="password" asp-for="Password" required>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Nhập lại Mật khẩu</label>
+                                <input class="input--style-4" type="password" asp-for="ConfirmPassword" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-t-50">
+                        <button class="btn btn--radius-2 btn--blue" type="submit">Đăng ký</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

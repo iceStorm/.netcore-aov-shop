@@ -4,16 +4,65 @@
 <head>
     <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0" />
 
+
+    <!-- base libs -->
+    <script src="~/libs/jquery/dist/jquery.js"></script>
+
+
+    <!-- snackbar -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="~/libs/snackbar-notifier/css/snackbar.css" rel="stylesheet" />
     <script src="~/libs/snackbar-notifier/js/snackbar.js"></script>
+
+
+    <!-- self modules -->
+    <link href="~/main/main.css" rel="stylesheet" />
+    <script src="~/main/main.js"></script>
+    <script src="~/header/header.js"></script>
 
 
     <link rel="icon" type="image/x-icon" href="~/fav-icon.png" />
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div>
-        @RenderBody()
+
+
+    <div id="wrapper">
+        @await Component.InvokeAsync("Header")
+
+        <div id="content">
+            @RenderBody()
+            <div class="100">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores similique soluta harum, quos animi non eligendi sit quidem, aspernatur sint numquam debitis rem, vero culpa facilis reprehenderit velit saepe nisi!</div>
+            <div class="100">Nisi sint, eius debitis id aperiam quaerat molestias ratione obcaecati neque, atque optio exercitationem corrupti. In numquam nesciunt, distinctio laudantium, exercitationem earum temporibus nisi ut repellendus quo harum illum voluptatum.</div>
+            <div class="100">Dicta non repellendus illum veniam possimus! Maxime alias fuga minima quibusdam ullam incidunt! Asperiores quasi quas repellendus quibusdam porro nobis fugit velit reprehenderit, obcaecati tenetur? Eos asperiores dicta quidem magni?</div>
+            <div class="100">Quae odit ex nam asperiores, voluptatem ducimus assumenda repudiandae dicta atque, iure excepturi deserunt, officia facere enim voluptates doloremque? Esse quis odit expedita aliquam repellat atque nam fugiat incidunt dignissimos!</div>
+            <div class="100">Quo, repellendus! Amet quisquam maiores voluptates ea voluptatibus blanditiis eveniet? Earum unde in numquam, velit facilis reprehenderit optio soluta error sint officiis laboriosam culpa. Id tempore ut quaerat cum nesciunt!</div>
+            <div class="100">Minima iusto suscipit optio quidem cum saepe a magni quasi inventore ex, sequi magnam earum quo consequatur sint debitis ad ipsam perspiciatis nemo molestias excepturi quisquam ea laudantium necessitatibus. Ipsam.</div>
+            <div class="100">Porro deleniti iure consequuntur aut sint dolorum nam modi. Eos inventore minima porro quo obcaecati reiciendis! Rem ipsam fuga veritatis labore maxime soluta sed quasi qui ea, dolorem consectetur cum?</div>
+            <div class="100">Esse est porro ducimus exercitationem itaque, ut doloremque qui sapiente praesentium vitae aliquid quisquam doloribus voluptates optio commodi, quos veniam libero omnis voluptatibus architecto eum sit! Culpa ipsa quas dolore?</div>
+            <div class="100">Quisquam officia velit quos earum quasi atque itaque eligendi eveniet ratione, ducimus libero, aut veritatis sapiente illum consequatur nulla distinctio? Laudantium ipsa et quis, eligendi exercitationem possimus voluptatibus voluptas quidem.</div>
+            <div class="100">Perspiciatis iure atque nulla temporibus! Minima aliquam, id doloremque in doloribus dolor pariatur suscipit architecto? Quo quam natus eligendi eum. Quae deserunt voluptatem magni minus minima impedit nulla expedita delectus?</div>
+            <div class="100">Laboriosam sequi voluptatibus unde. Laborum tempora repellendus accusantium voluptatem assumenda ad, ex facilis, at ab, voluptate iure voluptas doloremque. Autem exercitationem fuga corrupti nisi, aut deleniti placeat illo suscipit natus!</div>
+            <div class="100">Veritatis cupiditate corrupti doloribus sunt. Vero repellendus, veritatis repellat laudantium quod minima nihil natus est deserunt ea aliquid consequuntur voluptatum aliquam explicabo velit temporibus distinctio sit aperiam, consequatur accusantium! Quam.</div>
+            <div class="100">Sapiente quam ex officia iure corrupti eum sint quidem blanditiis exercitationem. Quasi suscipit molestiae ipsa iusto corrupti nesciunt, impedit nostrum quae, reiciendis eveniet nobis praesentium maxime quo consectetur explicabo soluta.</div>
+            <div class="100">Aut quis commodi maiores tenetur excepturi mollitia! Velit ea quasi unde modi laudantium placeat facere repellendus? Et doloribus nihil, libero suscipit, exercitationem expedita officia tenetur, fugiat harum voluptatum asperiores debitis?</div>
+            <div class="100">Ab dicta praesentium sed, dignissimos porro eos inventore reprehenderit, aut esse dolores nostrum adipisci voluptatibus sunt laborum doloremque, quo quas commodi? Maxime veniam optio deleniti. Voluptate, temporibus sapiente. Esse, obcaecati?</div>
+            <div class="100">Ullam inventore nisi laboriosam neque dignissimos at adipisci aliquam sed pariatur deserunt nemo accusamus velit, magnam saepe non iste labore consequatur error nesciunt ratione voluptas sit recusandae. Saepe, veritatis ducimus.</div>
+            <div class="100">Nam doloribus molestiae velit est fugit reprehenderit, ipsa nulla excepturi nostrum eaque aspernatur laborum dignissimos maiores ipsum, delectus labore perspiciatis similique! Sunt vel sed maiores architecto non molestiae modi incidunt.</div>
+            <div class="100">Blanditiis voluptatum quod hic dolorem sequi sint quas saepe impedit! Beatae quidem sed hic officiis corporis? Iste enim quam rerum commodi in. Repudiandae necessitatibus quam ullam ipsam eos iste quidem!</div>
+            <div class="100">Harum itaque iure, consequuntur quo repellendus ducimus reiciendis nulla maxime provident enim quisquam, architecto alias officia nemo, atque impedit unde tenetur quam perspiciatis a eaque sit? Dolore maxime deleniti labore.</div>
+            <div class="100">Delectus, accusamus consequuntur nam iste earum similique dignissimos quis laudantium animi excepturi eius! Enim earum neque id alias nostrum commodi nam hic veniam, error est aliquid quo ducimus quibusdam delectus.</div>
+            <div class="100">Inventore aspernatur culpa iusto cupiditate esse eius amet pariatur labore, omnis facere, error minus cum. Mollitia ad optio sunt necessitatibus? In alias corporis enim nulla voluptas minus iste rerum laboriosam.</div>
+            <div class="100">Consequatur illum aliquam earum atque numquam, eius quos, voluptates minima veritatis iste deserunt reprehenderit! Quia iusto quod in dolorum delectus deleniti! Voluptate repellendus nemo enim quod nisi non reprehenderit quae!</div>
+            <div class="100">Atque eius dolorum perferendis corrupti eum ullam pariatur obcaecati labore porro perspiciatis mollitia esse adipisci inventore, animi maxime harum enim libero cupiditate nemo fugiat aut voluptatem! Alias quia ad sunt!</div>
+            <div class="100">Dignissimos quos obcaecati fuga architecto excepturi optio impedit dolor officia! Asperiores magni natus temporibus, illum modi earum at, veniam, explicabo ex doloremque nesciunt. Soluta earum rem error nisi nam ut.</div>
+            <div class="100">Fugit tenetur error minus modi aliquid dignissimos similique nam ea velit, labore nobis recusandae laboriosam quis reprehenderit temporibus ullam fuga eius quos? Voluptas delectus, veritatis quo ab assumenda cupiditate laudantium?</div>
+            <div class="100">Ea earum reiciendis excepturi labore perspiciatis ipsam quibusdam, dicta commodi! Recusandae unde atque in enim explicabo inventore? Consequatur quae commodi unde neque quis, laboriosam impedit animi velit? Consequatur, autem architecto.</div>
+            <div class="100">Eos praesentium amet dolore explicabo voluptates earum, assumenda ut enim laborum cumque, saepe quam soluta placeat autem aperiam ducimus similique ratione neque quos consectetur porro! Asperiores nobis placeat quae ad.</div>
+            <div class="100">Quam cum suscipit fuga neque dolorum. Numquam, incidunt dignissimos, voluptatum vero eaque dolorum doloribus nam quaerat iusto, adipisci quasi autem sequi a inventore aliquid! Minima, alias consequatur. Sint, provident nulla.</div>
+            <div class="100">Magnam odio ducimus numquam consequuntur excepturi nisi nemo dignissimos reprehenderit consectetur voluptate tenetur, quasi pariatur, voluptas natus optio quos labore recusandae obcaecati omnis sapiente aspernatur molestias nesciunt deserunt? Aliquid, dolorem!</div>
+            <div class="100">Provident culpa unde eaque dignissimos qui quam repellendus harum debitis atque dolores aliquid odio, fugiat eos cupiditate pariatur consequuntur veniam magni! Itaque, eum. Suscipit corrupti, eius incidunt recusandae libero aspernatur.</div>
+        </div>
     </div>
 
 
@@ -24,22 +73,12 @@
             const snackbar = new SnackBar;
 
             snackbar.make("message", [
-
-                // message
-                "@TempData["message"]",
-
-                // action text
-                null,
-
-                // vertical position
-                "bottom",
-
-                // horizontal position
-                "center"
-
+                "@TempData["message"]", null, "bottom", "center"
             ], 5000);
         </script>
     }
 
+
+    @await Html.PartialAsync("_Footer");
 </body>
 </html>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using App.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace App.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-
-            return View();
+            var viewModel = new HeaderViewModel { };
+            return View(viewModel);
         }
     }
 }

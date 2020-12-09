@@ -1,0 +1,30 @@
+@import './fonts';
+
+
+:root{
+    --paddingX: 180px;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: InterUI;
+}
+
+body {
+    overflow: hidden;
+}
+
+ul {
+    list-style: none;
+}
+
+
+@import './media-sides';
+@import '../content/content.scss';
+@import '../header/header';
+@import '../footer/footer';
+@import '../content/content.scss';
