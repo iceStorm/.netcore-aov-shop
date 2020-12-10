@@ -56,14 +56,6 @@ namespace App.Controllers
         }
 
 
-        /*[Authorize(Roles = Constants.ClientRole)]
-        public async Task<IActionResult> ReCharge()
-        {
-            var currentUser = await userManager.GetUserAsync(HttpContext.User);
-            return View(currentUser);
-        }*/
-
-
         [Authorize(Roles = Constants.ClientRole)]
         public async Task<IActionResult> BoughtHistory()
         {
@@ -71,8 +63,6 @@ namespace App.Controllers
             return View(currentUser);
         }
         #endregion
-
-
 
 
 
@@ -102,9 +92,9 @@ namespace App.Controllers
                     if (loginResult.Succeeded)  // when the login succeeded
                     {
                         if (await userManager.IsInRoleAsync(user, Constants.ClientRole))
-                            return Redirect("/");
+                            return Redirect(viewModel.ReturnUrl ?? "/");
                         else
-                            return Redirect("/Dashboard");
+                            return Redirect(viewModel.ReturnUrl ?? "/Dashboard");
                     }
                     else
                     {

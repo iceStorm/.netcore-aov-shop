@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAEA,0BAA2B;EACvB,KAAM;IACF,UAAU,CAAC,KAAK",
-"sources": ["media-sides.scss"],
-"names": [],
-"file": "media-sides.css"
-}

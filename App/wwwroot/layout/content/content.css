@@ -8,7 +8,6 @@
   right: 0;
   bottom: 0;
   z-index: 98;
-  transition: all .55s ease-in-out;
-  text-align: justify; }
-
+  text-align: justify;
+}
 /*# sourceMappingURL=content.css.map */

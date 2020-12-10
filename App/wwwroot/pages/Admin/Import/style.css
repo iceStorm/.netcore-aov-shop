@@ -1,0 +1,57 @@
+﻿
+
+form {
+    text-align: center;
+}
+
+table {
+    display: inline-table;
+    border-spacing: 13px;
+}
+
+table tr:first-child td,
+table tr:nth-child(2) td {
+    /*display: flex;
+    flex-direction: row;
+    column-gap: 20px;*/
+}
+
+table tr:first-child td input,
+table tr:nth-child(2) td input {
+    width: 49%;
+}
+
+table tr:first-child td input:first-child,
+table tr:nth-child(2) td input:first-child {
+    float: left;
+}
+table tr:first-child td input:last-child,
+table tr:nth-child(2) td input:last-child {
+    float: right;
+}
+
+
+.form-control {
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    width: 100%;
+}
+
+
+textarea {
+    resize: vertical;
+}
+
+
+input[type=submit] {
+    cursor: pointer;
+    display: none;
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 15px 25px;
+    background: #049b01;
+    color: white;
+}

@@ -9,5 +9,6 @@ namespace App.ViewModels
     public class DashboardViewModel
     {
         public IQueryable<GameAccount> GameAccounts { get; set; }
+        public IQueryable<UserAccount> ClientAccounts { get; set; }
     }
 }

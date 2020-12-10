@@ -1,5 +1,6 @@
 ﻿@model DashboardViewModel
 
 
+
 <h1>Total accounts: @Model.GameAccounts.Count()</h1>
 <h1>Sold accounts: @Model.GameAccounts.Where(acc => acc.Sold).Count()</h1>

@@ -37,7 +37,7 @@ namespace App.Repositories.DbContexts
 
 
             SeedRanks(services);
-            SeedGameAccounts(services);
+            /*SeedGameAccounts(services);*/
         }
 
         private static async Task<bool> EnsureAdminAccountAsync(UserManager<UserAccount> userManager, AdminSeedAccount adminAccount)
@@ -108,7 +108,6 @@ namespace App.Repositories.DbContexts
                             Password = "abc",
                             RankName = "Kim Cương",
                             GoldsCount = 10000,
-                            RubiesCount = 500,
                             SkinsCount = 120,
                             HeroesCount = 75
                         },
@@ -120,7 +119,6 @@ namespace App.Repositories.DbContexts
                             ImageUrls = "a",
                             RankName = "Bạch Kim",
                             GoldsCount = 10000,
-                            RubiesCount = 500,
                             SkinsCount = 120,
                             HeroesCount = 75
                         }, new GameAccount
@@ -131,7 +129,6 @@ namespace App.Repositories.DbContexts
                             ImageUrls = "a",
                             RankName = "Tinh Anh",
                             GoldsCount = 10000,
-                            RubiesCount = 500,
                             SkinsCount = 120,
                             HeroesCount = 75
                         }, new GameAccount
@@ -142,7 +139,6 @@ namespace App.Repositories.DbContexts
                             ImageUrls = "a",
                             RankName = "Vàng",
                             GoldsCount = 10000,
-                            RubiesCount = 500,
                             SkinsCount = 120,
                             HeroesCount = 75
                         }, new GameAccount
@@ -153,7 +149,6 @@ namespace App.Repositories.DbContexts
                             ImageUrls = "a",
                             RankName = "Kim Cương",
                             GoldsCount = 10000,
-                            RubiesCount = 500,
                             SkinsCount = 120,
                             HeroesCount = 75
                         }

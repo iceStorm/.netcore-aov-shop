@@ -44,7 +44,7 @@ namespace App.Repositories
             }
             else
             {
-                dbContext.GameAccounts.Add(accEntry);
+                dbContext.GameAccounts.Add(account);
                 dbContext.SaveChanges();
             }
         }

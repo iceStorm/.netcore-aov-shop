@@ -42,6 +42,7 @@ Snackbar style
     position: fixed;
     bottom: -10px;
     pointer-events: none;
+    z-index: 9999;
 }
 
 .snackbar > div {

@@ -17,9 +17,9 @@
 
 
     <!-- self modules -->
-    <link href="~/main/main.css" rel="stylesheet" />
-    <script src="~/main/main.js"></script>
-    <script src="~/header/header.js"></script>
+    <link href="~/layout/main/main.css" rel="stylesheet" />
+    <script src="~/layout/main/main.js"></script>
+    <script src="~/layout/header/header.js"></script>
 
 
     <link rel="icon" type="image/x-icon" href="~/fav-icon.png" />
@@ -42,7 +42,6 @@
         <snackbar></snackbar>
         <script>
             const snackbar = new SnackBar;
-
             snackbar.make("message", [
                 "@TempData["message"]", null, "bottom", "center"
             ], 5000);

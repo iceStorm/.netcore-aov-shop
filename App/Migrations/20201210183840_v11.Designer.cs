@@ -4,14 +4,16 @@ using App.Repositories.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace App.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201210183840_v11")]
+    partial class v11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,8 +23,10 @@ namespace App.Migrations
 
             modelBuilder.Entity("App.Models.GameAccount", b =>
                 {
-                    b.Property<string>("LoginName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<int>("GoldsCount")
                         .HasColumnType("int");
@@ -31,6 +35,10 @@ namespace App.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrls")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LoginName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -54,7 +62,7 @@ namespace App.Migrations
                     b.Property<string>("UserAccountId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("LoginName");
+                    b.HasKey("Id");
 
                     b.HasIndex("RankName");
 
