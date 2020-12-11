@@ -1,0 +1,113 @@
+﻿
+
+#accounts-statistics {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 30px;
+}
+
+
+#accounts-statistics .card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+
+    min-width: 250px;
+    min-height: 150px;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 20px;
+
+    text-decoration: none;
+    text-align: center;
+}
+
+
+#accounts-statistics .card:nth-child(1) {
+    color: crimson;
+}
+#accounts-statistics .card:nth-child(2) {
+    color: cornflowerblue;
+}
+#accounts-statistics .card:nth-child(3) {
+    color: #34ae00;
+}
+#accounts-statistics .card:nth-child(4) {
+    color: #ddbb00;
+}
+
+
+#accounts-statistics .card .title {
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
+    padding: 15px;
+    border-top: 1px solid #eee;
+}
+
+
+#accounts-statistics .card .nc-icon {
+    font-size: 55px;
+    padding: 15px;
+}
+
+
+
+table {
+    width: 100%;
+    margin: 30px 0;
+
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+}
+
+table tr td, table tr th {
+    padding: 10px;
+}
+
+table tr:first-child th {
+    border-bottom: 1px solid #ddd;
+}
+
+table tr:hover {
+    background: #eee;
+    transition: all .15s ease-in-out;
+}
+
+
+
+table th:last-child {
+    /*text-align: center;*/
+}
+
+table td:last-child {
+    /*text-align: center;*/
+    padding: 20px 10px;
+}
+
+
+table td:last-child a {
+    text-decoration: none;
+    padding: 7px 15px;
+
+    border-radius: 3px;
+    color: white;
+}
+
+table td:last-child a:nth-child(1) {
+    background: red;
+}
+table td:last-child a:nth-child(2) {
+    background: #ddbb00;
+}
+table td:last-child a:nth-child(3) {
+    background: cornflowerblue;
+}

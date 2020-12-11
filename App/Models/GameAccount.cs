@@ -10,9 +10,6 @@ namespace App.Models
 {
     public class GameAccount
     {
-        public bool Sold { get; set; } = false; //  Đã bán
-
-
         [Key]
         [Required(ErrorMessage = "Vui lòng nhập Tên đăng nhập cho tài khoản")]
         public string LoginName { get; set; }
@@ -57,11 +54,17 @@ namespace App.Models
 
 
 
+        [ForeignKey (nameof(Buyer))]
+        public string UserAccountId;
+        public UserAccount Buyer { get; set; }
+
+
+
+
         public void CopyValues(GameAccount source)
         {
             Price = source.Price;
             Password = source.Password;
-            Sold = source.Sold;
             ImageUrls = source.ImageUrls;
             HeroesCount = source.HeroesCount;
             SkinsCount = source.SkinsCount;
