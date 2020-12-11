@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iOS Style Dialog Popup Demos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="./modal.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="./modal.js"></script>
+    <style>
+    body { overflow:hidden;}
+    .container { margin-top:70px;}
+        .color-red {
+            color: red;
+        }
+        .bg-blue{
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<div class="jquery-script-ads" style="margin:50px auto;"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+<h1>iOS Style Dialog Popup Demos</h1>
+<button class="btn btn-primary" id="alert1">alert dialog 1</button>
+<button class="btn btn-primary" id="alert2">alert dialog 2</button>
+<button class="btn btn-primary" id="alert3">alert dialog 3</button>
+<button class="btn btn-primary" id="alert4">alert dialog 4</button>
+
+<br>
+<br>
+<button class="btn btn-primary" id="confirm1">confirm dialog 1</button>
+<button class="btn btn-primary" id="confirm2">confirm dialog 2</button>
+<button class="btn btn-primary" id="confirm3">confirm dialog 3</button>
+<button class="btn btn-primary" id="confirm4">confirm dialog 4</button>
+<button class="btn btn-primary" id="confirm5">confirm dialog 5</button>
+
+<br>
+<br>
+<button class="btn btn-primary" id="showPreloader">showPreloader</button>
+<button class="btn btn-primary" id="showIndicator">showIndicator</button>
+<br>
+<br>
+
+<button class="btn btn-primary" id="toast1">toast1</button>
+<button class="btn btn-primary" id="toast2">toast2</button>
+<button class="btn btn-primary" id="toast3">toast3</button>
+<button class="btn btn-primary" id="toast4">toast4</button>
+<br>
+<br>
+<button class="btn btn-primary" id="actions">actions</button>
+
+<script>
+    $(function () {
+        $('#alert1').click(function () {
+            $.alert('Message Here');
+        });
+
+        $('#alert2').click(function () {
+            $.alert('Message Here', 'Title Here');
+        });
+
+        $('#alert3').click(function () {
+            $.alert('Message Here', function () {
+                alert('Confirm Callback');
+            });
+        });
+
+        $('#alert4').click(function () {
+            $.alert('Message Here', 'Title Here', function () {
+                alert('Confirm Callback');
+            });
+        });
+        $('#confirm1').click(function () {
+            $.confirm('Message Here');
+        });
+
+        $('#confirm2').click(function () {
+            $.confirm('Message Here', 'Title Here');
+        });
+
+        $('#confirm3').click(function () {
+            $.confirm('Message Here', function () {
+                alert('Confirm Callback');
+            });
+        });
+
+        $('#confirm4').click(function () {
+            $.confirm('Message Here', 'Title Here', function () {
+                alert('Confirm Callback');
+            });
+        });
+
+        $('#confirm5').click(function () {
+            $.confirm('Message Here', 'Title Here', function () {
+                alert('Confirm Callback');
+            }, function () {
+                alert('Cancel Callback');
+            });
+        });
+
+        $('#showPreloader').click(function () {
+            $.showPreloader('Title Here'); 
+
+            setTimeout(function () {
+                $.hidePreloader(); 
+            }, 2000)
+        });
+
+        $('#showIndicator').click(function () {
+            $.showIndicator();
+
+            setTimeout(function () {
+                $.hideIndicator(); 
+            }, 2000)
+        });
+
+        $('#toast1').click(function () {
+            $.toast('Message Here');
+        });
+
+        $('#toast2').click(function () {
+            $.toast('Message Here', 3000);
+        });
+
+        $('#toast3').click(function () {
+            $.toast('Message Here', function () {
+                alert('toast is closed');
+            });
+        });
+
+        $('#toast4').click(function () {
+            $.toast('Message Here', 3000, function () {
+                alert('toast is closed');
+            });
+        });
+
+        $('#actions').click(function () {
+            $.actions([
+                [
+                    {
+                        text: 'Action Sheet',
+
+                        close: false,
+                        bold: true, 
+                        disabled: true,
+                        bg: 'blue',
+                        color: 'red', 
+                    }
+                ],
+                [
+                    {
+                        text: 'Item 1',
+                        close: false, 
+                        onClick: function () {
+                            alert('Clicked Item 1');
+                        }
+                    },
+                    {
+                        text: 'Item 2',
+                        onClick: function () {
+                            alert('Clicked Item 2');
+                        }
+                    },
+                    {
+                        text: 'Item 3',
+                        onClick: function () {
+                            alert('Clicked Item 3');
+                        }
+                    }
+                ],
+
+                [
+                    {
+                        text: 'Test Text',
+                    },
+                    {
+                        text: 'Test Text',
+                    },
+                    {
+                        text: 'Test Text',
+                    }
+                ],
+
+                [
+                    {
+                        text: 'Close',
+                    }
+                ],
+
+            ]);
+        });
+    });
+</script>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

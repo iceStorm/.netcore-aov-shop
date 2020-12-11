@@ -40,4 +40,5 @@ function assignData(obj) {
 
 
 FilePond.parse(document.body);
+FilePond.registerPlugin(FilePondPluginFileValidateType);
 document.getElementById('file').addEventListener('change', onChange);

@@ -20,7 +20,7 @@ namespace App.Repositories
 
 
 
-        public IQueryable<GameAccount> Accounts => dbContext.GameAccounts.Include(ga => ga.Rank);
+        public IQueryable<GameAccount> Accounts => dbContext.GameAccounts;
 
         public bool DeleteGameAccount(string loginName)
         {
@@ -40,6 +40,7 @@ namespace App.Repositories
             if (accEntry != null)
             {
                 accEntry.CopyValues(account);
+                dbContext.GameAccounts.Update(accEntry);
                 dbContext.SaveChanges();
             }
             else

@@ -95,8 +95,10 @@ namespace App
 
 
             app.UseMvc(routes => {
-                routes.MapRoute(name: null, template: "", defaults: new { controller = "Home", action = "Index" });
+                routes.MapRoute(name: null, template: "Page{pageIndex:int}", defaults: new { controller = "Home", action = "Index", pageIndex = 1 });
                 routes.MapRoute(name: null, template: "Dashboard", defaults: new { controller = "Admin", action = "Dashboard" });
+
+                routes.MapRoute(name: null, template: "", defaults: new { controller = "Home", action = "Index" });
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
 

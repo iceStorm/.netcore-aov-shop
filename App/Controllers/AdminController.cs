@@ -81,6 +81,57 @@ namespace App.Controllers
 
             return View("GameAccounts/Import", model);
         }
+
+        public IActionResult Delete(string accLoginName)
+        {
+            var getAcc = gameAccountRepo.Accounts.Where(acc => acc.LoginName == accLoginName).FirstOrDefault();
+            if (getAcc != null)
+            {
+                gameAccountRepo.DeleteGameAccount(getAcc.LoginName);
+                TempData["message"] = "Xoá Tài khoản thành công !";
+                return RedirectToAction(nameof(GameAccounts));
+            }
+
+            TempData["message"] = "Tài khoản không tồn tại !";
+            return RedirectToAction(nameof(GameAccounts));
+        }
+
+        public IActionResult Edit(string accLoginName)
+        {
+            var foundAcc = gameAccountRepo.Accounts.Where(acc => acc.LoginName == accLoginName).FirstOrDefault();
+            if (foundAcc != null)
+            {
+                return View("GameAccounts/Edit", foundAcc);
+            }
+
+
+            TempData["message"] = "Tài khoản không tồn tại";
+            return RedirectToAction(nameof(GameAccounts));
+        }
+
+        [HttpPost]
+        public IActionResult Edit(GameAccount model)
+        {
+            if (ModelState.IsValid)
+            {
+                var foundAcc = gameAccountRepo.Accounts.FirstOrDefault(acc => acc.LoginName == model.LoginName);
+                if (foundAcc != null)
+                {
+                    gameAccountRepo.SaveGameAccount(model);
+                    TempData["message"] = "Cập nhật thành công !";
+                    return RedirectToAction(nameof(GameAccounts));
+                }
+
+
+                TempData["message"] = "Tài khoản không tồn tại";
+                return RedirectToAction(nameof(GameAccounts));
+            }
+            else
+            {
+                TempData["message"] = "Vui lòng nhập đủ thông tin";
+                return View("GameAccounts/Edit", model);
+            }
+        }
         #endregion
 
 
@@ -94,10 +145,14 @@ namespace App.Controllers
 
 
 
+        #region ADMIN ACCOUNT MANAGING
         public async Task<IActionResult> AdminAccounts()
         {
             return View("AdminAccounts/List", userAccountRepo.Accounts(Constants.AdminRole));
         }
+
+
+        #endregion
 
 
     }

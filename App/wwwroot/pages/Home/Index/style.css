@@ -1,0 +1,133 @@
+﻿
+.paging-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 50px;
+}
+
+
+.pagination {
+    padding: 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid #eee;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+
+.page-item {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.page-item.active {
+    background-color: #e5efff;
+}
+
+.page-item.head-item {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.page-link {
+    padding: 10px 20px;
+    text-decoration: none;
+
+    height: 100%;
+}
+
+.page-item:not(:last-child) .page-link {
+    border-right: 1px solid #eee;
+}
+
+.page-link:hover {
+    background: rgba(173, 202, 255, 0.54);
+}
+
+
+
+
+/*  card  */
+.acc-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-column-gap: 25px;
+    grid-row-gap: 25px;
+
+    padding-top: 35px;
+}
+.acc-card {
+    overflow: hidden;
+    max-height: 300px;
+
+    background: rgba(255, 255, 255, 0.57);
+    border-radius: 6px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 24px 0px rgba(0, 0, 0, 0.15);
+
+    text-decoration: none;
+}
+
+.acc-card .acc-thumbnail {
+    object-fit: contain;
+    width: 100%;
+}
+.acc-card .acc-info {
+    padding: 5px 15px 10px 15px;
+}
+.acc-card .acc-info .acc-price {
+    color: #f7bd08;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 0 0 20px 0;
+    text-shadow: 0 0 1px rgba(51, 51, 51, 0.36);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.acc-card .acc-info table {
+    display: inline-table;
+    width: 100%;
+}
+.acc-card .acc-info table tr {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.acc-card .acc-info table td {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 14px;
+    color: rgb(90, 103, 126);
+}
+.acc-card .acc-info table tr:last-child {
+    justify-content: center;
+}
+
+.acc-card .acc-info table td:first-child {
+    text-align: left;
+}
+.acc-card .acc-info table td:last-child {
+    text-align: right;
+}
+
+
+
+.title-icon {
+    width: 20px;
+    margin-right: 5px;
+}

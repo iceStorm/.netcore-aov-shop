@@ -1,0 +1,48 @@
+﻿@model GameAccount
+
+@{
+    ViewBag.Title = "Sửa thông tin Tài khoản";
+}
+
+
+
+<form asp-action="Edit" id="import-form" autocomplete="off">
+
+    <table align="center">
+        <tr>
+            <td colspan="3">
+                <input type="text" class="form-control" asp-for="RankName" placeholder="Rank" />
+                <input type="number" min="0" class="form-control" asp-for="Price" placeholder="Price" />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3">
+                <input type="text" class="form-control" asp-for="LoginName" placeholder="Login Name" />
+                <input type="password" class="form-control" asp-for="Password" placeholder="Password" value="@Model.Password" />
+            </td>
+        </tr>
+
+        <tr>
+            <td><input type="number" min="0" class="form-control" asp-for="HeroesCount" placeholder="Heroes Count" /></td>
+            <td><input type="number" min="0" class="form-control" asp-for="SkinsCount" placeholder="Skins Count" /></td>
+            <td><input type="number" min="0" class="form-control" asp-for="GoldsCount" placeholder="Golds Count" /></td>
+        </tr>
+
+        <tr>
+            <td colspan="3"><textarea rows="10" cols="100" class="form-control" asp-for="ImageUrls" placeholder="Image Urls"></textarea></td>
+        </tr>
+
+
+        <tr>
+            <td colspan="3">
+                <input type="submit" value="Update" />
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+
+<link href="~/pages/Admin/Import/style.css" rel="stylesheet" />
+<script>$('input[type=submit]').show();</script>

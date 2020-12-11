@@ -9,5 +9,8 @@ namespace App.ViewModels
     public class HomeViewModel
     {
         public IQueryable<GameAccount> AccountsList { get; set; }
+
+        public PagingInfo PagingInfo { get; set; }
+
     }
 }
