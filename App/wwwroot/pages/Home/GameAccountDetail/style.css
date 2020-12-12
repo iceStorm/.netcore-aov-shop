@@ -1,0 +1,62 @@
+﻿
+.acc-detail-wrapper {
+    padding: 30px 0 50px;
+}
+
+
+.acc-photos-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.acc-photos-container  {
+    overflow: hidden;
+}
+
+.acc-photos-container .bounder img {
+    object-fit: contain;
+    width: 100%;
+}
+
+
+
+
+.acc-summary {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-bottom: 35px;
+}
+
+.acc-summary-info {
+    text-align: center;
+}
+
+.acc-summary table {
+    display: inline-table;
+    border-collapse: collapse;
+}
+
+.acc-summary table td, .acc-summary table th {
+    padding: 10px 20px;
+    text-align: center;
+
+    border: 1px solid #eee;
+}
+
+
+.btn-buy {
+    text-decoration: none;
+}
+
+.btn-buy.bottom {
+    display: block;
+    margin: 30px auto 15px;
+}
+
+.game-button {
+    margin-bottom: 30px !important;
+}

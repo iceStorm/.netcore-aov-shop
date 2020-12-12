@@ -21,6 +21,12 @@
 
         @if (Model.Role == Constants.AdminRole)
         {
+            <style>
+                footer {
+                    display: none !important;
+                }
+            </style>
+
             <li class="user-dropdown-item">
                 <a class="user-dropdown-link" asp-controller="Admin" asp-action="GameAccounts">
                     <i class="nc-icon nc-layers-3"></i>

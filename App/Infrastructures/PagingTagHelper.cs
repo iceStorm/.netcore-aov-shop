@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace App.Infrastructures
 {
 
-    [HtmlTargetElement("ul", Attributes = "paging-action")]
+    [HtmlTargetElement("div", Attributes = "paging-action")]
     public class PagingTagHelper : TagHelper
     {
         private IUrlHelperFactory urlHelperFactory;
@@ -37,71 +37,53 @@ namespace App.Infrastructures
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             IUrlHelper urlHelper = this.urlHelperFactory.GetUrlHelper(ViewContext);
-            TagBuilder ulTag = new TagBuilder("ul");
+            TagBuilder divTag = new TagBuilder("div");
 
 
             #region Previous Button
-            TagBuilder firstLiTag = new TagBuilder("li");
-            firstLiTag.Attributes["class"] = "page-item head-item";
+            TagBuilder firstATag = new TagBuilder("a");
+            firstATag.Attributes["class"] = "page-item head-item";
             if (PagingModel.CurrentPageIndex > 1)
             {
-                TagBuilder aTag = new TagBuilder("a");
-                aTag.Attributes["class"] = "page-link";
-                aTag.InnerHtml.Append("⤎");
-                aTag.Attributes["href"] = urlHelper.Action(PagingAction, new { pageIndex = PagingModel.CurrentPageIndex - 1 });
-                firstLiTag.InnerHtml.AppendHtml(aTag);
+                firstATag.InnerHtml.Append("⤎");
+                firstATag.Attributes["href"] = urlHelper.Action(PagingAction, new { pageIndex = PagingModel.CurrentPageIndex - 1 });
             }
-            else
-            {
-                firstLiTag.Attributes["class"] += " not-available";
-            }
-            ulTag.InnerHtml.AppendHtml(firstLiTag);
+            divTag.InnerHtml.AppendHtml(firstATag);
             #endregion
 
 
             #region Center Area
             for (int i = 1; i <= PagingModel.TotalPages; ++i)
             {
-                TagBuilder liTag = new TagBuilder("li");
-                liTag.Attributes["class"] = i == PagingModel.CurrentPageIndex ? "page-item active" : "page-item";
-
-
                 TagBuilder aTag = new TagBuilder("a");
-                aTag.Attributes["class"] = "page-link";
+                aTag.Attributes["class"] = i == PagingModel.CurrentPageIndex ? "page-item active" : "page-item";
+
+
                 if (PagingModel.CurrentPageIndex != i)
                 {
                     aTag.Attributes["href"] = urlHelper.Action(PagingAction, new { pageIndex = i });
                 }
+
                 aTag.InnerHtml.Append(i.ToString());
-
-
-                liTag.InnerHtml.AppendHtml(aTag);
-                ulTag.InnerHtml.AppendHtml(liTag);
+                divTag.InnerHtml.AppendHtml(aTag);
             }
             #endregion
 
 
             #region Next Button
-            TagBuilder lastLiTag = new TagBuilder("li");
-            lastLiTag.Attributes["class"] = "page-item head-item";
+            TagBuilder lastATag = new TagBuilder("a");
+            lastATag.Attributes["class"] = "page-item head-item";
             if (PagingModel.CurrentPageIndex < PagingModel.TotalPages)
             {
-                TagBuilder aTag = new TagBuilder("a");
-                aTag.Attributes["class"] = "page-link";
-                aTag.Attributes["href"] = urlHelper.Action(PagingAction, new { pageIndex = PagingModel.CurrentPageIndex + 1 });
-                aTag.InnerHtml.Append("⤏");
-                lastLiTag.InnerHtml.AppendHtml(aTag);
+                lastATag.Attributes["href"] = urlHelper.Action(PagingAction, new { pageIndex = PagingModel.CurrentPageIndex + 1 });
+                lastATag.InnerHtml.Append("⤏");
             }
-            else
-            {
-                lastLiTag.Attributes["class"] += " not-available";
-            }
-            ulTag.InnerHtml.AppendHtml(lastLiTag);
+            divTag.InnerHtml.AppendHtml(lastATag);
             #endregion
 
 
 
-            output.Content.AppendHtml(ulTag.InnerHtml);
+            output.Content.AppendHtml(divTag.InnerHtml);
         }
     }
 }

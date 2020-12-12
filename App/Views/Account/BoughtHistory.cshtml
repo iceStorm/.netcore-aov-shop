@@ -1,4 +1,48 @@
 ﻿@model UserAccount
+@{
+    ViewBag.Title = "Lịch sử Mua";
+}
+
+<link href="~/pages/Home/Index/game-button.css" rel="stylesheet" />
+<link href="~/pages/Home/BoughtHistory/style.css" rel="stylesheet" />
 
 
-<h1>@Model.FirstName</h1>
+
+@if (Model.BoughtAccounts.Count() == 0)
+{
+    <h3>Bạn chưa mua bất kỳ Tài khoản Game nào.</h3>
+    <p class="explore-button">
+        <a asp-action="Index" asp-controller="Home" class="game-button">Khám phá</a>
+    </p>
+}
+else
+{
+    <table>
+        <caption>Thông tin các Tài khoản Game đã mua</caption>
+        <tr>
+            <th>#</th>
+            <th>Tên đăng nhập</th>
+            <th>Mật khẩu</th>
+            <th>Rank</th>
+            <th>Số lượng Tướng</th>
+            <th>Số lượng Trang phục</th>
+            <th>Số lượng Vàng</th>
+            <th>Giá bán</th>
+        </tr>
+
+        @{ var counter = 1; }
+        @foreach (var item in Model.BoughtAccounts)
+        {
+            <tr>
+                <td>@(counter++)</td>
+                <td>@item.LoginName</td>
+                <td>@item.Password</td>
+                <td>@item.RankName</td>
+                <td>@item.HeroesCount</td>
+                <td>@item.SkinsCount</td>
+                <td>@String.Format("{0:n0}", item.GoldsCount)</td>
+                <td>@String.Format("{0:n0}", item.Price)<sup>đ</sup></td>
+            </tr>
+        }
+    </table>
+}

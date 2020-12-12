@@ -25,10 +25,6 @@ namespace App.Models
         [BindNever]
         public ICollection<GameAccount> BoughtAccounts { get; set; }
 
-
-        public int TotalMoney { get; set; } = 0;   //  Số tiền trong Tài khoản ảo
-
-
         
         public void PasteValues(UserAccount source)
         {

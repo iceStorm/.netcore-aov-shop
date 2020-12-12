@@ -1,1 +1,7 @@
-/* No CSS *//*# sourceMappingURL=footer.css.map */
+footer {
+  min-height: 300px;
+  padding: 20px 0;
+  border-top: 2px solid #eee;
+  margin-top: 35px; }
+
+/*# sourceMappingURL=footer.css.map */

@@ -1,0 +1,23 @@
+﻿table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+caption {
+    text-align: left;
+    margin: 35px 0 10px;
+
+    font-size: 16px;
+    color: #ffa900;
+}
+
+td, th {
+    border: 1px solid #eee;
+    padding: 10px 15px;
+}
+
+
+form {
+    margin: 30px 0 20px;
+    text-align: center;
+}

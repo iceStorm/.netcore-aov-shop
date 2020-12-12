@@ -1,0 +1,30 @@
+﻿
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+caption {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0 50px;
+}
+
+td, th {
+    border: 1px solid #eee;
+    padding: 10px 15px;
+}
+
+tr:not(:first-child):hover {
+    background: #f4f4f4;
+}
+
+h3 {
+    text-align: center;
+}
+
+p.explore-button {
+    text-align: center;
+    margin: 50px;
+}

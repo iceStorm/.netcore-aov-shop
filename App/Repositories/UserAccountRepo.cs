@@ -2,6 +2,7 @@
 using App.Models;
 using App.Repositories.DbContexts;
 using App.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,10 @@ namespace App.Repositories
 
         public IQueryable<UserAccount> Accounts(string roleType)
         {
-            var adminRoleId = dbContext.Roles.Where(r => r.Name == roleType).Select(r => r.Id).FirstOrDefault();
-            var adminUsersId = dbContext.UserRoles.Where(ur => ur.RoleId == adminRoleId).Select(ur => ur.UserId);
+            var roleId = dbContext.Roles.Where(r => r.Name == roleType).Select(r => r.Id).FirstOrDefault();
+            var usersId = dbContext.UserRoles.Where(ur => ur.RoleId == roleId).Select(ur => ur.UserId);
 
-            return dbContext.Users.Where(u => adminUsersId.Contains(u.Id));
+            return dbContext.Users.Where(u => usersId.Contains(u.Id)).Include(acc => acc.BoughtAccounts);
         }
 
 

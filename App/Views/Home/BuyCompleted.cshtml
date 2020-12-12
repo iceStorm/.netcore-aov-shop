@@ -1,0 +1,39 @@
+﻿@model BuyViewModel
+@{
+    ViewBag.Title = "Mua Tài khoản Thành công";
+}
+
+<link href="~/pages/Home/Index/game-button.css" rel="stylesheet" />
+<link href="~/pages/Home/BuyCompleted/style.css" rel="stylesheet" />
+
+
+
+<h1>Chúc mừng bạn đã mua Tài khoản Game thành công!</h1>
+<h3>Vui lòng Thay đổi mật khẩu khi sử dụng Tài khoản Game lần đầu </h3>
+
+<table>
+    <caption>Thông tin Tài khoản Game</caption>
+    <tr>
+        <th>Tên đăng nhập</th>
+        <th>Mật khẩu</th>
+        <th>Rank</th>
+        <th>Số lượng Tướng</th>
+        <th>Số lượng Trang phục</th>
+        <th>Số lượng Vàng</th>
+        <th>Giá bán</th>
+    </tr>
+    <tr>
+        <td>@Model.GameAccount.LoginName</td>
+        <td>@Model.GameAccount.Password</td>
+        <td>@Model.GameAccount.RankName</td>
+        <td>@Model.GameAccount.HeroesCount</td>
+        <td>@Model.GameAccount.SkinsCount</td>
+        <td>@String.Format("{0:n0}", Model.GameAccount.GoldsCount)</td>
+        <td>@String.Format("{0:n0}", Model.GameAccount.Price)<sup>đ</sup></td>
+    </tr>
+</table>
+
+
+<p class="explore-button">
+    <a asp-action="Index" asp-controller="Home" class="game-button">Trang Chủ</a>
+</p>

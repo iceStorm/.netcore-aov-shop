@@ -1,0 +1,51 @@
+﻿@model BuyViewModel
+@{
+    ViewBag.Title = "Xác nhận Mua Tài khoản";
+}
+
+<link href="~/pages/Home/Index/game-button.css" rel="stylesheet" />
+<link href="~/pages/Home/Buy/style.css" rel="stylesheet" />
+
+
+
+<div class="buy-container">
+    <h2>Xác nhận Mua Tài khoản</h2>
+
+    <table>
+        <caption>Thông tin Tài khoản Game</caption>
+        <tr>
+            <th>Rank</th>
+            <th>Số lượng Tướng</th>
+            <th>Số lượng Trang phục</th>
+            <th>Số lượng Vàng</th>
+            <th>Giá bán</th>
+        </tr>
+        <tr>
+            <td>@Model.GameAccount.RankName</td>
+            <td>@Model.GameAccount.HeroesCount</td>
+            <td>@Model.GameAccount.SkinsCount</td>
+            <td>@String.Format("{0:n0}", Model.GameAccount.GoldsCount)</td>
+            <td>@String.Format("{0:n0}", Model.GameAccount.Price)<sup>đ</sup></td>
+        </tr>
+    </table>
+
+    <table>
+        <caption>Thông tin Người mua</caption>
+        <tr>
+            <th>Họ</th>
+            <th>Tên</th>
+            <th>E-mail</th>
+        </tr>
+        <tr>
+            <td>@Model.Buyer.SurName</td>
+            <td>@Model.Buyer.FirstName</td>
+            <td>@Model.Buyer.Email</td>
+        </tr>
+    </table>
+
+
+    <form asp-action="Purchase">
+        <input type="hidden" name="loginName" value="@Model.GameAccount.LoginName" />
+        <input type="submit" value="Thanh toán bằng VN Pay" class="game-button orange"/>
+    </form>
+</div>

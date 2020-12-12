@@ -9,23 +9,26 @@
 
 
 .pagination {
+    border: 1px solid #eee;
     padding: 0;
 
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
 
-    border: 1px solid #eee;
     border-radius: 6px;
     overflow: hidden;
 }
 
 
 .page-item {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
+    padding: 7px 20px;
+    text-decoration: none;
+    color: rgb(90, 103, 126);
+
+    /*border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;*/
 }
 
 .page-item.active {
@@ -34,21 +37,20 @@
 
 .page-item.head-item {
     font-weight: bold;
-    font-size: 24px;
+    display: none;
+
+    padding: 7px 15px;
 }
 
-.page-link {
-    padding: 10px 20px;
-    text-decoration: none;
-
-    height: 100%;
+.page-item.head-item[href^='/'] {
+    display: block;
 }
 
-.page-item:not(:last-child) .page-link {
+.page-item:not(:last-child) {
     border-right: 1px solid #eee;
 }
 
-.page-link:hover {
+.page-item:hover {
     background: rgba(173, 202, 255, 0.54);
 }
 
@@ -59,14 +61,14 @@
 .acc-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-column-gap: 25px;
-    grid-row-gap: 25px;
+    grid-column-gap: 30px;
+    grid-row-gap: 30px;
 
     padding-top: 35px;
 }
 .acc-card {
     overflow: hidden;
-    max-height: 300px;
+    min-height: 300px;
 
     background: rgba(255, 255, 255, 0.57);
     border-radius: 6px;
@@ -74,6 +76,9 @@
     box-shadow: 0 2px 24px 0px rgba(0, 0, 0, 0.15);
 
     text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
 }
 
 .acc-card .acc-thumbnail {
@@ -82,12 +87,16 @@
 }
 .acc-card .acc-info {
     padding: 5px 15px 10px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    row-gap: 20px;
 }
 .acc-card .acc-info .acc-price {
     color: #f7bd08;
     font-weight: bold;
     font-size: 18px;
-    padding: 0 0 20px 0;
     text-shadow: 0 0 1px rgba(51, 51, 51, 0.36);
 
     display: flex;
@@ -126,8 +135,19 @@
 }
 
 
-
 .title-icon {
     width: 20px;
     margin-right: 5px;
+}
+
+
+.acc-card .buy-btn {
+    background: #eee;
+    padding: 10px 20px;
+    border-radius: 4px;
+
+    text-align: center;
+    align-self: center;
+
+    text-decoration: none;
 }

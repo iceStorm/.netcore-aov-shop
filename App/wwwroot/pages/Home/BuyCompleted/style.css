@@ -1,0 +1,27 @@
+﻿table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid #eee;
+    padding: 10px 15px;
+}
+
+caption {
+    text-align: left;
+    margin: 35px 0 10px;
+    font-size: 16px;
+    color: #ffa900;
+}
+
+p.explore-button {
+    text-align: center;
+    margin: 50px;
+}
+
+h3 {
+    color: #ffa900;
+    margin: 10px 0 30px;
+}
+

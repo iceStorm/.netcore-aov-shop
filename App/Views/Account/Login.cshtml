@@ -12,6 +12,7 @@
             <div class="card-body">
                 <h2 class="title">Đăng nhập</h2>
                 <form method="POST" asp-controller="Account" asp-action="Login">
+                    <input type="hidden" asp-for="ReturnUrl" />
                     <div class="row row-space">
                         <div class="col-2">
                             <div class="input-group">

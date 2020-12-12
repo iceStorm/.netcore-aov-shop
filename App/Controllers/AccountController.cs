@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using App.Infrastructures;
 using App.Models;
+using App.Repositories.Interfaces;
 using App.ViewModels;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authentication;
@@ -17,15 +18,17 @@ namespace App.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private IUserAccountRepo userAccountRepo;
         private MailkitMetaData mailkitMetadata;
         private RoleManager<IdentityRole> roleManager;
         private UserManager<UserAccount> userManager;
         private SignInManager<UserAccount> signInManager;
 
-        public AccountController(MailkitMetaData mailkitMetadata, 
-            RoleManager<IdentityRole> roleManager, UserManager<UserAccount> userManager, 
-            SignInManager<UserAccount> signInManager)
+        public AccountController(IUserAccountRepo userAccountRepo, 
+            MailkitMetaData mailkitMetadata, RoleManager<IdentityRole> roleManager,
+            UserManager<UserAccount> userManager, SignInManager<UserAccount> signInManager)
         {
+            this.userAccountRepo = userAccountRepo;
             this.mailkitMetadata = mailkitMetadata;
             this.roleManager = roleManager;
             this.userManager = userManager;
@@ -60,7 +63,8 @@ namespace App.Controllers
         public async Task<IActionResult> BoughtHistory()
         {
             var currentUser = await userManager.GetUserAsync(HttpContext.User);
-            return View(currentUser);
+            var fullyUser = userAccountRepo.Accounts(Constants.ClientRole).FirstOrDefault(acc => acc.Email == currentUser.Email);
+            return View(fullyUser);
         }
         #endregion
 

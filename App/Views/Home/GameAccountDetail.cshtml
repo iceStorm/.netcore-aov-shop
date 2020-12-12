@@ -1,4 +1,58 @@
 ﻿@model GameAccount
 
 
-<h1>@Model.LoginName</h1>
+<link href="~/pages/Home/Index/game-button.css" rel="stylesheet" />
+<link href="~/pages/Home/GameAccountDetail/style.css" rel="stylesheet" />
+<script>AOS.init();</script>
+
+
+<form asp-action="Buy" method="get">
+    <input type="hidden" asp-for="LoginName" />
+
+    <div class="acc-detail-wrapper">
+        <div class="acc-summary">
+            <div class="acc-summary-info">
+                <table>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Số lượng Tướng</th>
+                        <th>Số lượng Trang phục</th>
+                        <th>Số lượng Vàng</th>
+                        <th>Giá bán</th>
+                    </tr>
+                    <tr>
+                        <td>@Model.RankName</td>
+                        <td>@Model.HeroesCount</td>
+                        <td>@Model.SkinsCount</td>
+                        <td>@String.Format("{0:n0}", Model.GoldsCount)</td>
+                        <td>@String.Format("{0:n0}", Model.Price)<sup>đ</sup></td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <button type="submit" class="game-button btn-buy"><span>@String.Format("{0:n0}", Model.Price)<sup>đ</sup></span> – Mua ngay"</button>
+        </div>
+
+
+        <div class="acc-photos-container">
+            @{ var counter = 0; }
+            @foreach (var item in Model.ImageUrls.Split('\n').Skip(1))
+            {
+                <div class="bounder"
+                     data-aos="fade-up"
+                     data-aos-offset="75"
+                     data-aos-delay="@(counter)"
+                     data-aos-duration="750"
+                     data-aos-easing="ease-out-back">
+                    <img src="@item" />
+                </div>
+
+                counter += 150;
+            }
+        </div>
+
+
+        <button type="submit" class="game-button btn-buy bottom"><span>@String.Format("{0:n0}", Model.Price)<sup>đ</sup></span> – Mua ngay"</button>
+    </div>
+</form>
