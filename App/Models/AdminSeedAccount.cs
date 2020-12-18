@@ -16,4 +16,16 @@ namespace App.Models
             return this;
         }
     }
+
+    public class SuperAdminSeedAccount : UserAccount
+    {
+        public string Password { get; set; }
+
+        public UserAccount ToUserAccount()
+        {
+            this.EmailConfirmed = true;
+            this.UserName = this.Email;
+            return this;
+        }
+    }
 }

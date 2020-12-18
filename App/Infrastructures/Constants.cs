@@ -8,6 +8,7 @@ namespace App.Infrastructures
     public static class Constants
     {
         public const string AdminRole = "Admin";
+        public const string SuperAdminRole = "SuperAdmin";
         public const string ClientRole = "Client";
     }
 }

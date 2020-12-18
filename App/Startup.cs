@@ -35,7 +35,7 @@ namespace App
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddDbContext<AppDbContext>(options => {
-                options.UseSqlServer(Configuration.GetConnectionString("Local"));
+                options.UseSqlServer(Configuration.GetConnectionString("DB"));
             });
 
 
@@ -68,10 +68,14 @@ namespace App
             services.AddMvc(opts => opts.EnableEndpointRouting = false);
             services.AddTransient<IGameAccountRepo, GameAccountRepo>();
             services.AddTransient<IUserAccountRepo, UserAccountRepo>();
+            services.AddTransient<IRankRepo, RankRepo>();
         }
 
         private void AddSeedData(IServiceCollection services)
         {
+            var superAdminAccount = Configuration.GetSection("SuperAdminAccount").Get<SuperAdminSeedAccount>();
+            services.AddSingleton(superAdminAccount);
+
             var adminAccount = Configuration.GetSection("AdminAccount").Get<AdminSeedAccount>();
             services.AddSingleton(adminAccount);
 
@@ -81,12 +85,12 @@ namespace App
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            /*if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-            }
+            }*/
 
 
+            app.UseDeveloperExceptionPage();
             app.UseRouting();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
@@ -96,6 +100,10 @@ namespace App
 
             app.UseMvc(routes => {
                 routes.MapRoute(name: null, template: "Page{pageIndex:int}", defaults: new { controller = "Home", action = "Index", pageIndex = 1 });
+                routes.MapRoute(name: null, template: "Home/Buy/acc_{accId:int}", defaults: new { controller = "Home", action = "Buy" });
+                routes.MapRoute(name: null, template: "acc_{accId:int}", defaults: new { controller = "Home", action = "GameAccountDetail" });
+
+
                 routes.MapRoute(name: null, template: "Dashboard", defaults: new { controller = "Admin", action = "Dashboard" });
 
                 routes.MapRoute(name: null, template: "", defaults: new { controller = "Home", action = "Index" });

@@ -1,4 +1,45 @@
 ﻿@model UserAccount
 
 
-<h1>@Model.FirstName</h1>
+<div id="profile-container">
+
+    <div class="avatar-container">
+        <img src="@(Model.AvatarUrl != null ? Url.Content("~/" + Model.AvatarUrl) : Url.Content("~/images/user-avatars/default-user.png"))" alt="avatar" />
+    </div>
+
+
+    <div class="info-container">
+        <form asp-action="Profile" enctype="multipart/form-data">
+            <div>
+                <p>Chọn Avatar:</p>
+                <input class="form-control filepond" type="file" />
+            </div>
+
+            <input class="form-control" asp-for="SurName" placeholder="Họ" required 
+                   oninvalid="javascript: setCustomValidity('Vui lòng nhập Họ');"
+                   oninput="javascript: setCustomValidity('');" />
+
+            <input class="form-control" asp-for="FirstName" placeholder="Tên đệm và Tên" required
+                   oninvalid="javascript: setCustomValidity('Vui lòng nhập Tên đệm và Tên');"
+                   oninput="javascript: setCustomValidity('');"/>
+
+            <input class="form-control" type="email" asp-for="Email" readonly />
+
+            <input class="form-control" type="submit" id="btn-save-changes" value="Lưu thay đổi" />
+        </form>
+    </div>
+</div>
+
+
+
+<!-- file-pond -->
+<link href="~/libs/filepond/plugins/image-preview/filepond-plugin-image-preview.min.css" rel="stylesheet" />
+<script src="~/libs/filepond/plugins/image-preview/filepond-plugin-image-preview.min.js"></script>
+<script src="~/libs/filepond/plugins/filepond-plugin-file-encode.min.js"></script>
+<script src="~/libs/filepond/plugins/file-validate-type/filepond-plugin-file-validate-type.min.js"></script>
+<link href="~/libs/filepond/filepond-master/dist/filepond.css" rel="stylesheet" />
+<script src="~/libs/filepond/filepond-master/dist/filepond.js"></script>
+
+
+<link href="~/pages/Account/Profile/style.css" rel="stylesheet" />
+<script src="~/pages/Account/Profile/script.js"></script>

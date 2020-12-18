@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>be7abfa5-780f-4361-8578-e77edddde952</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,7 +10,7 @@
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\images\game-account-photos\" />
     <Folder Include="wwwroot\images\rank-photos\" />
-    <Folder Include="wwwroot\images\user-avatars\" />
+    <Folder Include="wwwroot\images\user-avatars\tmp\" />
   </ItemGroup>
 
   <ItemGroup>

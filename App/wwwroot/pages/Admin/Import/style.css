@@ -9,20 +9,14 @@ table {
     border-spacing: 13px;
 }
 
-table tr:first-child td,
-table tr:nth-child(2) td {
-    /*display: flex;
-    flex-direction: row;
-    column-gap: 20px;*/
-}
 
-table tr:first-child td input,
-table tr:nth-child(2) td input {
+table tr:first-child td > *,
+table tr:nth-child(2) td > * {
     width: 49%;
 }
 
-table tr:first-child td input:first-child,
-table tr:nth-child(2) td input:first-child {
+table tr:first-child td > *:first-child,
+table tr:nth-child(2) td > *:first-child {
     float: left;
 }
 table tr:first-child td input:last-child,
@@ -46,7 +40,7 @@ textarea {
 
 input[type=submit] {
     cursor: pointer;
-    display: none;
+    /*display: none;*/
 
     border: none;
     border-radius: 6px;

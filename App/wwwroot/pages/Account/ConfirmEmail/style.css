@@ -1,0 +1,40 @@
+﻿
+.confirm-container {
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 10px;
+}
+
+.confirm-container > * {
+    width: 275px;
+}
+
+
+.alert {
+    border-radius: 6px;
+    padding: 15px;
+}
+
+.alert-success {
+    background-color: rgba(0, 181, 23, 0.10);
+    border: #00b517;
+    color: rgba(0, 181, 23, 0.81);
+}
+
+.alert-danger {
+    background-color: rgba(181, 0, 0, 0.27);
+    border: #e24800;
+    color: rgba(226, 72, 0, 0.88);
+}
+
+.btn {
+    border-radius: 6px;
+    padding: 10px;
+
+    color: white;
+    background-color: dodgerblue;
+}

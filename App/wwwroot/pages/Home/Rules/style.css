@@ -1,0 +1,19 @@
+﻿
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+
+    row-gap: 20px;
+}
+
+
+.c-font-uppercase.c-font-bold {
+    font-size: 22px;
+}
+
+ol li {
+    padding-bottom: 7px;
+}

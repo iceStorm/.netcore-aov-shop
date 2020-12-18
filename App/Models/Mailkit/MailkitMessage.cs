@@ -18,7 +18,7 @@ namespace App.Models
         public string renderConfirmMessage()
         {
             return $@"
-                <a id='btn-confirm' href='{this.Content}'>Bấm vào đây để xác thực Tài khoản của bạn trên ShopAOV.vn</a>
+                <a id='btn-confirm' href='{this.Content}'>Bấm vào đây để xác thực Tài khoản của bạn trên aov-shop.tk</a>
                 <h5>This email lasts for 3 days.</h5>
 
                 <style>

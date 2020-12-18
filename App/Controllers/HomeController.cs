@@ -48,9 +48,9 @@ namespace App.Controllers
         }
 
 
-        public IActionResult GameAccountDetail(string accLoginName)
+        public IActionResult GameAccountDetail(int accId)
         {
-            var acc = accRepo.Accounts.FirstOrDefault(acc => acc.LoginName == accLoginName);
+            var acc = accRepo.Accounts.FirstOrDefault(acc => acc.Id == accId && acc.UserAccountId == null);
             if (acc != null)
             {
                 return View(acc);
@@ -63,11 +63,11 @@ namespace App.Controllers
 
         [HttpGet]
         [Authorize(Roles = Constants.ClientRole)]
-        public async Task<IActionResult> Buy(string loginName)
+        public async Task<IActionResult> Buy(int accId)
         {
             if (ModelState.IsValid)
             {
-                var selectedAcc = accRepo.Accounts.FirstOrDefault(acc => acc.LoginName == loginName);
+                var selectedAcc = accRepo.Accounts.FirstOrDefault(acc => acc.Id == accId && acc.UserAccountId == null);
                 var currentUser = await userManager.GetUserAsync(HttpContext.User);
 
 
@@ -79,20 +79,20 @@ namespace App.Controllers
 
 
             TempData["message"] = "Tài khoản Game không tồn tại";
-            return RedirectToAction(nameof(GameAccountDetail), loginName);
+            return RedirectToAction(nameof(GameAccountDetail), accId);
         }
 
 
 
         [Authorize(Roles = Constants.ClientRole)]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Purchase(string loginName)
+        public async Task<IActionResult> Purchase(int accId)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var selectedAcc = accRepo.Accounts.FirstOrDefault(acc => acc.LoginName == loginName);
+                    var selectedAcc = accRepo.Accounts.FirstOrDefault(acc => acc.Id == accId);
                     var currentUser = await userManager.GetUserAsync(HttpContext.User);
 
 
@@ -116,21 +116,32 @@ namespace App.Controllers
                     else
                     {
                         TempData["message"] = "Có lỗi trong quá trình Thanh toán";
-                        return RedirectToAction(nameof(GameAccountDetail), loginName);
+                        return RedirectToAction(nameof(GameAccountDetail), accId);
                     }
                 }
                 catch (Exception ex)
                 {
                     TempData["message"] = "Có lỗi trong quá trình Thanh toán";
-                    return RedirectToAction(nameof(GameAccountDetail), loginName);
+                    return RedirectToAction(nameof(GameAccountDetail), accId);
                 }
             }
 
 
             TempData["message"] = "Có lỗi trong quá trình Thanh toán";
-            return RedirectToAction(nameof(GameAccountDetail), loginName);
+            return RedirectToAction(nameof(GameAccountDetail), accId);
         }
        
+
+
+        public IActionResult Rules()
+        {
+            return View();
+        }
+
+        public IActionResult Guides()
+        {
+            return View();
+        }
 
     }
 }

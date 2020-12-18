@@ -15,6 +15,10 @@ namespace App.Models
         public string LoginName { get; set; }
 
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+
         [Required(ErrorMessage = "Vui lòng nhập Mật khẩu cho tài khoản")]
         public string Password { get; set; }
 

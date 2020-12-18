@@ -1,9 +1,0 @@
-version: '3.8'
-
-services:
-  web:
-    container_name: shopping-app
-    image: tl-shopping-app
-    ports:
-      - 8080:80
-    restart: always

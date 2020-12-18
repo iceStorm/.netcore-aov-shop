@@ -1,0 +1,18 @@
+﻿
+
+.guids-container h2 {
+    text-transform: uppercase;
+}
+
+.guids-container h3 {
+    padding: 40px 0 15px;
+}
+
+.guids-container p {
+    padding: 25px 0 10px;
+}
+
+.guids-container img {
+    width: 100%;
+    border: 1px solid #eee;
+}

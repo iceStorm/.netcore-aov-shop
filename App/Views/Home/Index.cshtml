@@ -17,7 +17,7 @@
     {
         <div class="acc-card"
             data-aos="fade-up"
-            data-aos-offset="250"
+            data-aos-offset="50"
             data-aos-delay="@(counter)"
             data-aos-duration="1750"
             data-aos-easing="ease-out-back">
@@ -35,7 +35,7 @@
                     </tr>
                 </table>
 
-                <a asp-action="GameAccountDetail" asp-route-accLoginName="@item.LoginName" class="game-button orange">Xem chi tiết</a>
+                <a asp-action="GameAccountDetail" asp-route-accId="@item.Id" class="game-button orange">Xem chi tiết</a>
             </div>
         </div>
 

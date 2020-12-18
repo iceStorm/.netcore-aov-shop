@@ -4,10 +4,26 @@ $(document).ready(() => {
     if ($('#Password').val() == '') {
         $('.form-control').each(function (index, elem) {
 
-            $(this).val('');
+            if (!$(this).is('select'))
+                $(this).val('');
         });
     }
-    
+
+
+    FilePond.registerPlugin(FilePondPluginFileValidateType);
+    FilePond.create(document.querySelector('input[type="file"]'), {
+        labelIdle: `Kéo thả file Dữ liệu vào khu vực này -- hoặc <span class="filepond--label-action">Duyệt file</span>`,
+        acceptedFileTypes: ['application/json'],
+        fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
+
+            // Do custom type detection here and return with promise
+
+            resolve(type);
+        })
+    });
+
+
+    document.getElementById('file').addEventListener('change', onChange);
 });
 
 
@@ -37,8 +53,3 @@ function assignData(obj) {
 
     $('input[type=submit]').show();
 }
-
-
-FilePond.parse(document.body);
-FilePond.registerPlugin(FilePondPluginFileValidateType);
-document.getElementById('file').addEventListener('change', onChange);

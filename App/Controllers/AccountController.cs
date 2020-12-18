@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using App.Infrastructures;
 using App.Models;
@@ -9,6 +11,7 @@ using App.ViewModels;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
@@ -18,16 +21,19 @@ namespace App.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private IHostingEnvironment environment;
         private IUserAccountRepo userAccountRepo;
         private MailkitMetaData mailkitMetadata;
         private RoleManager<IdentityRole> roleManager;
         private UserManager<UserAccount> userManager;
         private SignInManager<UserAccount> signInManager;
 
-        public AccountController(IUserAccountRepo userAccountRepo, 
-            MailkitMetaData mailkitMetadata, RoleManager<IdentityRole> roleManager,
-            UserManager<UserAccount> userManager, SignInManager<UserAccount> signInManager)
+        public AccountController(IHostingEnvironment environment,
+            IUserAccountRepo userAccountRepo, MailkitMetaData mailkitMetadata,
+            RoleManager<IdentityRole> roleManager, UserManager<UserAccount> userManager,
+            SignInManager<UserAccount> signInManager)
         {
+            this.environment = environment;
             this.userAccountRepo = userAccountRepo;
             this.mailkitMetadata = mailkitMetadata;
             this.roleManager = roleManager;
@@ -57,6 +63,85 @@ namespace App.Controllers
             var currentUser = await userManager.GetUserAsync(HttpContext.User);
             return View(currentUser);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Profile(UserAccount model)
+        {
+            if (ModelState.IsValid)
+            {
+                var saveResult = userAccountRepo.SaveAccount(model);
+                if (saveResult != null)
+                {
+                    TempData["message"] = "Đã cập nhật thông tin";
+                    return View(saveResult);
+                }
+
+
+                TempData["message"] = "Có lỗi trong quá trình xử lý";
+                return View(model);
+            }
+
+            TempData["message"] = "Vui lòng nhập đủ thông tin";
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UploadAvatar()
+        {
+            var files = HttpContext.Request.Form.Files;
+            if (files != null)
+            {
+                try
+                {
+                    // Getting FileName
+                    var fileName = ContentDispositionHeaderValue.Parse(files[0].ContentDisposition).FileName.Trim('"');
+
+                    // Getting file Extension
+                    var fileExtension = Path.GetExtension(fileName);
+
+
+
+                    // Generate an unique string
+                    var uniqueFileName = Convert.ToString(Guid.NewGuid());
+
+                    // concating  FileName + FileExtension
+                    var newFileName = uniqueFileName + fileExtension;
+
+
+
+                    // Combines two strings into a path.
+                    fileName = Path.Combine(environment.WebRootPath, "images", "user-avatars", "tmp", newFileName);
+
+
+                    // Save the image to folder
+                    using (FileStream fs = System.IO.File.Create(fileName))
+                    {
+                        files[0].CopyTo(fs);
+                        fs.Flush();
+                    }
+
+
+                    return Json(Path.Combine("images", "user-avatars", "tmp", newFileName));
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+
+
+            return BadRequest(Json("Error during upload"));
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> RemoveAvatar()
+        {
+            var files = HttpContext.Request.Form.Files;
+            return Json(true);
+        }
+
 
 
         [Authorize(Roles = Constants.ClientRole)]
@@ -98,7 +183,16 @@ namespace App.Controllers
                         if (await userManager.IsInRoleAsync(user, Constants.ClientRole))
                             return Redirect(viewModel.ReturnUrl ?? "/");
                         else
-                            return Redirect(viewModel.ReturnUrl ?? "/Dashboard");
+                        {
+                            if (viewModel.ReturnUrl != null)
+                            {
+                                Redirect(viewModel.ReturnUrl);
+                            }
+                            else
+                            {
+                                return RedirectToAction("GameAccounts",  "Admin");
+                            }
+                        }
                     }
                     else
                     {
@@ -126,7 +220,6 @@ namespace App.Controllers
         #endregion
 
 
-
         #region SignUp
         [AllowAnonymous]
         public IActionResult SignUp()
@@ -151,9 +244,8 @@ namespace App.Controllers
                 else
                 {
 
-                    // init new Client model --> create
+                    // init new Client model --> create  --- here the client is null
                     client = new UserAccount {
-                        UserName = viewModel.Email,
                         Email = viewModel.Email,
                         SurName = viewModel.User.SurName,
                         FirstName = viewModel.User.FirstName
@@ -193,7 +285,7 @@ namespace App.Controllers
                                 /* send the mail */
                                 var emailMessage = new MailkitMessage
                                 {
-                                    Subject = "ShopAOV.vn - Xác minh Tài khoản",
+                                    Subject = "aov-shop.tk - Xác minh Tài khoản",
                                     Content = confirmationUrl,
                                     Sender = new MailboxAddress(mailkitMetadata.Sender),
                                     Receiver = new MailboxAddress(client.Email)
@@ -203,14 +295,14 @@ namespace App.Controllers
 
                                 using (SmtpClient smtpClient = new SmtpClient())
                                 {
-                                    smtpClient.Connect(mailkitMetadata.SmtpServer, mailkitMetadata.Port, true);
+                                    smtpClient.Connect(mailkitMetadata.SmtpServer, mailkitMetadata.Port);
                                     smtpClient.Authenticate(mailkitMetadata.UserName, mailkitMetadata.Password);
                                     smtpClient.Send(emailMessage.GetMimeMessage());
                                     smtpClient.Disconnect(true);
                                 }
 
 
-                                TempData["message"] = "Vui lòng kiểm tra E-mail để kích hoạt tài khoản !";
+                                TempData["message"] = "Vui lòng kiểm tra E-mail để kích hoạt !";
                                 return RedirectToAction(nameof(Login));
                             }   //  addRole
 
@@ -245,8 +337,8 @@ namespace App.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string token, string email)
         {
-
             var client = await userManager.FindByEmailAsync(email);
+
             if (client != null)
             {
                 var confirmResult = await userManager.ConfirmEmailAsync(client, token);
@@ -261,6 +353,21 @@ namespace App.Controllers
         }
         #endregion
 
+
+        #region Change Password
+        public async Task<IActionResult> ChangePassword()
+        {
+            var currentUser = await userManager.GetUserAsync(HttpContext.User);
+            return View((ChangePasswordViewModel)currentUser);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel viewModel)
+        {
+            return View(viewModel);
+        }
+        #endregion
 
     }
 }

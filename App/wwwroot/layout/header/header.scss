@@ -57,16 +57,6 @@
     column-gap: 30px;
 
 
-    input.virtual-checkbox {
-        visibility: hidden;
-
-        &:checked + .category-item > .sub-menu {
-            display: block;
-            opacity: 1;
-        }
-    }
-
-
     .category-item {
         position: relative;
 
@@ -79,8 +69,9 @@
             letter-spacing: -.01em;
 
             &:hover {
-                border-radius: 3px;
-                background: #488bff31;
+                color: #488aff;
+                // border-radius: 3px;
+                // background: #488bff31;
             }
 
             &.expandable {
@@ -109,15 +100,16 @@
 
         .sub-menu {
             display: none;
+            
 
             background: rgba(255, 255, 255, 0.986);
-            box-shadow: 0 18px 24px rgba(2, 8, 20, 0.075), 0 8px 8px rgba(2,8,20,.1);
+            box-shadow: 0 5px 24px rgba(2, 8, 20, 0.075), 0 8px 8px rgba(2,8,20,.1);
             padding: 15px 15px 15px 15px;
             border: 0;
             border-radius: 4px;
 
             position: absolute;
-            top: 120%;
+            top: 100%;
             z-index: 99;
             transform-origin: 50% 0;
             width: max-content;
@@ -159,6 +151,11 @@
                     }
                 }
             }
+        }
+
+        &:hover .sub-menu {
+            display: block;
+            opacity: 1;
         }
     }
 }

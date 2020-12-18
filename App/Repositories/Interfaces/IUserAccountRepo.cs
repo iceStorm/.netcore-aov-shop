@@ -9,7 +9,7 @@ namespace App.Repositories.Interfaces
     public interface IUserAccountRepo
     {
         IQueryable<UserAccount> Accounts(string roleType);
-        void SaveAccount(UserAccount account);
+        UserAccount SaveAccount(UserAccount account);
         bool DeleteAccount(UserAccount account);
     }
 }

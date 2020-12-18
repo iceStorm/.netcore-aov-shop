@@ -3,6 +3,7 @@ using App.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -23,52 +24,103 @@ namespace App.Repositories.DbContexts
         }
 
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // ignore the Id field from updating...
+            modelBuilder.Entity<GameAccount>(builder =>
+            {
+                builder.Property(e => e.Id).ValueGeneratedOnAdd()
+                    .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore); // <--
+            });
+        }
+
+
 
         public static async Task SeedData(IServiceProvider services)
         {
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-            if (await EnsureRolesAsync(roleManager))
-            {
-                var userManager = services.GetRequiredService<UserManager<UserAccount>>();
-                var adminAccount = services.GetRequiredService<AdminSeedAccount>();
+            await EnsureRolesAsync(roleManager);
 
-                var createAccountResult = await EnsureAdminAccountAsync(userManager, adminAccount);
-            }
+
+            var userManager = services.GetRequiredService<UserManager<UserAccount>>();
+            await EnsureAdminAccountsAsync(userManager, services);
 
 
             SeedRanks(services);
             /*SeedGameAccounts(services);*/
         }
 
-        private static async Task<bool> EnsureAdminAccountAsync(UserManager<UserAccount> userManager, AdminSeedAccount adminAccount)
+        private static async Task EnsureAdminAccountsAsync(UserManager<UserAccount> userManager, IServiceProvider services)
         {
-            var user = await userManager.FindByEmailAsync(adminAccount.Email);
-            if (user != null) return true;
+            #region Seed Super Admin
+            var superAdminModel = services.GetRequiredService<SuperAdminSeedAccount>();
+            var superAdmin = await userManager.FindByEmailAsync(superAdminModel.Email);
 
-
-            var adminUser = adminAccount.ToUserAccount();
-            var userCreateResult = await userManager.CreateAsync(adminUser, adminAccount.Password);
-
-            if (userCreateResult.Succeeded)
+            if (superAdmin == null)
             {
-                var addRoleResult = await userManager.AddToRoleAsync(adminUser, Constants.AdminRole);
-                return addRoleResult.Succeeded;
-            }
+                var superAdminUser = superAdminModel.ToUserAccount();
+                var userCreateResult = await userManager.CreateAsync(superAdminUser, superAdminModel.Password);
 
-            return false;
+
+                if (userCreateResult.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(superAdminUser, Constants.SuperAdminRole);
+                }
+            }
+            #endregion
+
+
+            #region Seed Admin
+            var adminModel = services.GetRequiredService<AdminSeedAccount>();
+            var user = await userManager.FindByEmailAsync(adminModel.Email);
+
+            if (user == null)
+            {
+                var adminUser = adminModel.ToUserAccount();
+                var userCreateResult = await userManager.CreateAsync(adminUser, adminModel.Password);
+
+
+                if (userCreateResult.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(adminUser, Constants.AdminRole);
+                }
+            }
+            #endregion
+
         }
 
-        private static async Task<bool> EnsureRolesAsync(RoleManager<IdentityRole> roleManager)
+        private static async Task EnsureRolesAsync(RoleManager<IdentityRole> roleManager)
         {
-            var adminRoleExisted = await roleManager.RoleExistsAsync(Constants.AdminRole);
-            var clientRoleExisted = await roleManager.RoleExistsAsync(Constants.ClientRole);
-            if (adminRoleExisted && clientRoleExisted) return true;
+            try
+            {
+                var adminRoleExisted = await roleManager.RoleExistsAsync(Constants.AdminRole);
+                var clientRoleExisted = await roleManager.RoleExistsAsync(Constants.ClientRole);
+                var superAdminRoleExisted = await roleManager.RoleExistsAsync(Constants.SuperAdminRole);
 
 
-            var adminRoleCreateResult = await roleManager.CreateAsync(new IdentityRole(Constants.AdminRole));
-            var clientRoleCreateResult = await roleManager.CreateAsync(new IdentityRole(Constants.ClientRole));
+                if (!superAdminRoleExisted)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(Constants.SuperAdminRole));
+                }
 
-            return adminRoleCreateResult.Succeeded && clientRoleCreateResult.Succeeded;
+
+                if (!adminRoleExisted)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(Constants.AdminRole));
+                }
+
+
+                if (!clientRoleExisted)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(Constants.ClientRole));
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error roles seeding...\n" + ex.Message);
+            }
         }
 
 
@@ -81,6 +133,7 @@ namespace App.Repositories.DbContexts
             if (!context.Ranks.Any())
             {
                 context.Ranks.AddRange(
+                    new Rank { Name = "Chưa Rank" },
                     new Rank { Name = "Đồng" },
                     new Rank { Name = "Bạc" },
                     new Rank { Name = "Vàng" },
@@ -158,6 +211,7 @@ namespace App.Repositories.DbContexts
                 context.SaveChanges();
             }
         }
+
 
     }
 }

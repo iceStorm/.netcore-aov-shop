@@ -45,9 +45,9 @@ namespace App.Repositories
             return false;
         }
 
-        public void SaveAccount(UserAccount account)
+        public UserAccount SaveAccount(UserAccount account)
         {
-            var user = dbContext.Users.FirstOrDefault(u => u.Id == account.Id);
+            var user = dbContext.Users.FirstOrDefault(u => u.Email == account.Email);
 
 
             if (user != null)
@@ -55,6 +55,8 @@ namespace App.Repositories
                 account.PasteValues(user);
                 dbContext.SaveChanges();
             }
+
+            return user;
         }
 
 

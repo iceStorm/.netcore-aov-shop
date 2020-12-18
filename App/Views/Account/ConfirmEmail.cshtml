@@ -1,17 +1,15 @@
 ﻿@model bool
 
 @{
-    Layout = null;
     ViewBag.Title = "Xác minh Tài khoản";
 }
 
 
-<link href="~/libs/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-<script src="~/libs/bootstrap/js/dist/popover.js"></script>
-<script src="~/libs/bootstrap/dist/js/bootstrap.js"></script>
+<link href="~/pages/Account/ConfirmEmail/style.css" rel="stylesheet" />
 
 
-<div class="container center">
+
+<div class="confirm-container">
     @if (Model)
     {
         <p class="alert alert-success">Thành công! Bây giờ bạn có thể Đăng nhập và sử dụng các dịch vụ.</p>

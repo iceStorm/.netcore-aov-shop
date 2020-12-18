@@ -1,4 +1,4 @@
-﻿@model GameAccount
+﻿@model AddGameAccountViewModel
 
 @{ 
     ViewBag.Title = "Nhập Tài khoản";
@@ -11,32 +11,34 @@
     <table align="center">
         <tr>
             <td colspan="3">
-                <input type="text" class="form-control" asp-for="RankName" placeholder="Rank" readonly />
-                <input type="number" min="0" class="form-control" asp-for="Price" placeholder="Price" readonly />
+                <select class="form-control" asp-for="RankName" asp-items="@(new SelectList(Model.RanksList, "Name", "Name"))" required>
+                    <option selected disabled hidden>-- Chọn Rank --</option>
+                </select>
+                <input type="number" min="0" class="form-control" asp-for="Price" placeholder="Price" required />
             </td>
         </tr>
 
         <tr>
             <td colspan="3">
-                <input type="text" class="form-control" asp-for="LoginName" placeholder="Login Name" readonly />
-                <input type="password" class="form-control" asp-for="Password" placeholder="Password" readonly />
+                <input type="text" class="form-control" asp-for="LoginName" placeholder="Login Name" required />
+                <input type="password" class="form-control" asp-for="Password" placeholder="Password" required />
             </td>
         </tr>
 
         <tr>
-            <td><input type="number" min="0" class="form-control" asp-for="HeroesCount" placeholder="Heroes Count" readonly></td>
-            <td><input type="number" min="0" class="form-control" asp-for="SkinsCount" placeholder="Skins Count" readonly /></td>
-            <td><input type="number" min="0" class="form-control" asp-for="GoldsCount" placeholder="Golds Count" readonly /></td>
+            <td><input type="number" min="0" class="form-control" asp-for="HeroesCount" placeholder="Heroes Count" required></td>
+            <td><input type="number" min="0" class="form-control" asp-for="SkinsCount" placeholder="Skins Count" required/></td>
+            <td><input type="number" min="0" class="form-control" asp-for="GoldsCount" placeholder="Golds Count" required/></td>
         </tr>
 
         <tr>
-            <td colspan="3"><textarea rows="10" cols="100" class="form-control" asp-for="ImageUrls" placeholder="Image Urls" readonly></textarea></td>
+            <td colspan="3"><textarea rows="10" cols="100" class="form-control" asp-for="ImageUrls" placeholder="Image Urls" required></textarea></td>
         </tr>
 
 
         <tr>
             <td colspan="3">
-                <input type="file" id="file" class="filepond" accept="image/jpeg, image/png" />
+                <input type="file" id="file" class="filepond" name="filepond" />
                 <input type="submit" value="Add" />
             </td>
         </tr>
@@ -45,10 +47,9 @@
 </form>
 
 
-
-<script src="~/libs/filepond/filepond-plugin-file-validate-type.min.js"></script>
-<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
-<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+<script src="~/libs/filepond/plugins/file-validate-type/filepond-plugin-file-validate-type.min.js"></script>
+<link href="~/libs/filepond/filepond-master/dist/filepond.css" rel="stylesheet" />
+<script src="~/libs/filepond/filepond-master/dist/filepond.js"></script>
 
 <script src="~/pages/Admin/Import/script.js"></script>
 <link href="~/pages/Admin/Import/style.css" rel="stylesheet" />

@@ -12,21 +12,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace App.Controllers
 {
-    [Authorize (Roles = Constants.AdminRole)]
+    [Roles (Constants.AdminRole, Constants.SuperAdminRole)]
     public class AdminController : Controller
     {
+        private IRankRepo rankRepo;
         private IGameAccountRepo gameAccountRepo;
         private IUserAccountRepo userAccountRepo;
         private RoleManager<IdentityRole> roleManager;
         private UserManager<UserAccount> userManager;
         private SignInManager<UserAccount> signInManager;
 
-        public AdminController(
-            IGameAccountRepo gameAccountRepo, IUserAccountRepo userAccountRepo,
-            RoleManager<IdentityRole> roleManager, 
-            UserManager<UserAccount> userManager,
-            SignInManager<UserAccount> signInManager)
+        public AdminController(IRankRepo rankRepo, IGameAccountRepo gameAccountRepo, 
+            IUserAccountRepo userAccountRepo, RoleManager<IdentityRole> roleManager, 
+            UserManager<UserAccount> userManager, SignInManager<UserAccount> signInManager)
         {
+            this.rankRepo = rankRepo;
             this.gameAccountRepo = gameAccountRepo;
             this.userAccountRepo = userAccountRepo;
             this.roleManager = roleManager;
@@ -35,8 +35,7 @@ namespace App.Controllers
         }
 
 
-
-        public async Task<IActionResult> Dashboard()
+        public IActionResult Dashboard()
         {
             return View(new DashboardViewModel {
                 GameAccounts = gameAccountRepo.Accounts,
@@ -54,20 +53,28 @@ namespace App.Controllers
 
         public IActionResult Import()
         {
-            return View("GameAccounts/Import", new GameAccount());
+            return View("GameAccounts/Import", new AddGameAccountViewModel { RanksList = rankRepo.Ranks });
         }
 
         [HttpPost]
-        public IActionResult Import(GameAccount model)
+        public IActionResult Import(AddGameAccountViewModel model)
         {
             if (ModelState.IsValid)
             {
+                if (rankRepo.Ranks.FirstOrDefault(r => r.Name == model.RankName) == null)
+                {
+                    model.RanksList = rankRepo.Ranks;
+                    TempData["message"] = "Rank không hợp lệ";
+                    return View("GameAccounts/Import", model);
+                }
+
+
                 var currentAcc = gameAccountRepo.Accounts.Where(acc => acc.LoginName == model.LoginName).FirstOrDefault();
                 if (currentAcc == null)
                 {
                     gameAccountRepo.SaveGameAccount(model);
                     TempData["message"] = "Thêm Tài khoản thành công !";
-                    return View("GameAccounts/Import", new GameAccount());
+                    return View("GameAccounts/Import", new AddGameAccountViewModel { RanksList = rankRepo.Ranks });
                 }
                 else
                 {
@@ -79,12 +86,14 @@ namespace App.Controllers
                 TempData["message"] = "Vui lòng nhập đủ thông tin";
             }
 
+
+            model.RanksList = rankRepo.Ranks;
             return View("GameAccounts/Import", model);
         }
 
-        public IActionResult Delete(string accLoginName)
+        public IActionResult Delete(int accId)
         {
-            var getAcc = gameAccountRepo.Accounts.Where(acc => acc.LoginName == accLoginName).FirstOrDefault();
+            var getAcc = gameAccountRepo.Accounts.Where(acc => acc.Id == accId).FirstOrDefault();
             if (getAcc != null)
             {
                 gameAccountRepo.DeleteGameAccount(getAcc.LoginName);
@@ -96,9 +105,9 @@ namespace App.Controllers
             return RedirectToAction(nameof(GameAccounts));
         }
 
-        public IActionResult Edit(string accLoginName)
+        public IActionResult Edit(int accId)
         {
-            var foundAcc = gameAccountRepo.Accounts.Where(acc => acc.LoginName == accLoginName).FirstOrDefault();
+            var foundAcc = gameAccountRepo.Accounts.Where(acc => acc.Id == accId).FirstOrDefault();
             if (foundAcc != null)
             {
                 return View("GameAccounts/Edit", foundAcc);
@@ -114,7 +123,8 @@ namespace App.Controllers
         {
             if (ModelState.IsValid)
             {
-                var foundAcc = gameAccountRepo.Accounts.FirstOrDefault(acc => acc.LoginName == model.LoginName);
+                var foundAcc = gameAccountRepo.Accounts.FirstOrDefault(acc => acc.LoginName == model.LoginName 
+                    && acc.Id == model.Id && acc.UserAccountId == null);
                 if (foundAcc != null)
                 {
                     gameAccountRepo.SaveGameAccount(model);
@@ -123,7 +133,7 @@ namespace App.Controllers
                 }
 
 
-                TempData["message"] = "Tài khoản không tồn tại";
+                TempData["message"] = "Tài khoản bị trùng hoặc không tồn tại";
                 return RedirectToAction(nameof(GameAccounts));
             }
             else
@@ -146,6 +156,7 @@ namespace App.Controllers
 
 
         #region ADMIN ACCOUNT MANAGING
+        [Authorize (Roles = Constants.SuperAdminRole)]
         public async Task<IActionResult> AdminAccounts()
         {
             return View("AdminAccounts/List", userAccountRepo.Accounts(Constants.AdminRole));

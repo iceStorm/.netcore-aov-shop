@@ -1,0 +1,59 @@
+﻿
+#profile-container {
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.avatar-container img {
+    width: 150px;
+    height: 150px;
+
+    border: 1px solid #eee;
+    border-radius: 50%;
+
+    object-fit: cover;
+    margin-bottom: 30px;
+}
+
+
+.info-container form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 15px;
+}
+
+.info-container form > div:first-child {
+    margin-bottom: 35px;
+}
+.info-container form > div:first-child p {
+    color: #a1a1a1;
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+
+.form-control {
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    width: 575px;
+}
+
+#btn-save-changes {
+    cursor: pointer;
+    margin-top: 30px;
+    background-color: #00aa16;
+    color: white;
+}
+#btn-save-changes:hover {
+    transition: all .15s ease-in-out;
+    background-color: rgba(0, 170, 22, 0.79);
+}
+
+input[type=email] {
+    cursor: not-allowed;
+}
