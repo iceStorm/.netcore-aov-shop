@@ -26,7 +26,9 @@ namespace App.Repositories
             var roleId = dbContext.Roles.Where(r => r.Name == roleType).Select(r => r.Id).FirstOrDefault();
             var usersId = dbContext.UserRoles.Where(ur => ur.RoleId == roleId).Select(ur => ur.UserId);
 
-            return dbContext.Users.Where(u => usersId.Contains(u.Id)).Include(acc => acc.BoughtAccounts);
+            return dbContext.Users.Where(u => usersId.Contains(u.Id))
+                .Include(acc => acc.BoughtAccounts)
+                    .ThenInclude(gameAcc => gameAcc.Rank);
         }
 
 
