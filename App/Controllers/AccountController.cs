@@ -58,6 +58,7 @@ namespace App.Controllers
 
 
         #region Main functions
+        [HttpGet]
         public async Task<IActionResult> Profile()
         {
             var currentUser = await userManager.GetUserAsync(HttpContext.User);
@@ -135,6 +136,7 @@ namespace App.Controllers
             return BadRequest(Json("Error during upload"));
         }
 
+
         [HttpDelete]
         public async Task<IActionResult> RemoveAvatar()
         {
@@ -152,6 +154,7 @@ namespace App.Controllers
             return View(fullyUser);
         }
         #endregion
+
 
 
 
@@ -297,7 +300,7 @@ namespace App.Controllers
                                 {
                                     smtpClient.Connect(mailkitMetadata.SmtpServer, mailkitMetadata.Port);
                                     smtpClient.Authenticate(mailkitMetadata.UserName, mailkitMetadata.Password);
-                                    smtpClient.Send(emailMessage.GetMimeMessage());
+                                    smtpClient.Send(emailMessage.GetConfirmEmailMimeMessage());
                                     smtpClient.Disconnect(true);
                                 }
 
@@ -355,19 +358,222 @@ namespace App.Controllers
 
 
         #region Change Password
-        public async Task<IActionResult> ChangePassword()
+        public IActionResult ChangePassword()
         {
-            var currentUser = await userManager.GetUserAsync(HttpContext.User);
-            return View((ChangePasswordViewModel)currentUser);
+            return View(new ChangePasswordViewModel());
         }
 
 
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel viewModel)
         {
+            if (ModelState.IsValid)
+            {
+                var currentUser = await userManager.GetUserAsync(HttpContext.User);
+
+                // check whether the old password that user entered matchs with current password stored in the database.
+                var isOldPasswordSatisfied = await userManager.CheckPasswordAsync(currentUser, viewModel.OldPassword);
+                if (!isOldPasswordSatisfied)
+                {
+                    TempData["message"] = "Mật khẩu cũ không đúng";
+                    return View(viewModel);
+                }
+                else
+                {
+                    var changePasswordResult = await userManager.ChangePasswordAsync(currentUser, viewModel.OldPassword, viewModel.NewPassword);
+                    if (changePasswordResult.Succeeded)
+                    {
+                        TempData["message"] = "Đã thay đổi Mật khẩu";
+                        return RedirectToAction(nameof(Profile));
+                    }
+
+
+                    TempData["message"] = "Có lỗi trong quá trình xử lý";
+                    return View(viewModel);
+                }
+            }
+
+
+            TempData["message"] = "Vui lòng nhập đủ thông tin";
             return View(viewModel);
+        }
+        #endregion
+
+
+        #region Reset Password
+        public async Task<IActionResult> ResetPassword()
+        {
+            try
+            {
+                var currentUser = await userManager.GetUserAsync(HttpContext.User);
+                await sendResetPasswordEmail(currentUser);
+
+                TempData["message"] = "Vui lòng kiểm tra E-mail để Reset";
+                return RedirectToAction(nameof(ChangePassword));
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = "Có lỗi trong quá trình xử lý";
+                return RedirectToAction(nameof(ChangePassword));
+            }
+        }
+
+
+        private async Task sendResetPasswordEmail(UserAccount currentUser)
+        {
+            // generate new token string
+            var tokenString = await userManager.GeneratePasswordResetTokenAsync(currentUser);
+
+
+            // generate url from action -- controller -- route values
+            var confirmationUrl = Url.Action(
+                nameof(ResetPasswordEmail), "Account",
+                new { token = tokenString, email = currentUser.Email },
+                Request.Scheme
+            );
+
+
+            /* create the mail content */
+            var emailMessage = new MailkitMessage
+            {
+                Subject = "aov-shop.tk - Đặt lại Mật khẩu",
+                Content = confirmationUrl,
+                Sender = new MailboxAddress(mailkitMetadata.Sender),
+                Receiver = new MailboxAddress(currentUser.Email)
+            };
+
+
+
+            using (SmtpClient smtpClient = new SmtpClient())
+            {
+                smtpClient.Connect(mailkitMetadata.SmtpServer, mailkitMetadata.Port);
+                smtpClient.Authenticate(mailkitMetadata.UserName, mailkitMetadata.Password);
+                smtpClient.Send(emailMessage.GetResetPasswordMimeMessage());
+                smtpClient.Disconnect(true);
+            }
+        }
+
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPasswordEmail(string token, string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                return View(new ResetPasswordEmailViewModel { Token = token, UserId = user.Id });
+            }
+
+
+            TempData["message"] = "Người dùng không tồn tại";
+            return View(RedirectToAction("Index", "Home"));
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPasswordEmail(ResetPasswordEmailViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByIdAsync(viewModel.UserId);
+                if (user != null)
+                {
+                    var resetPasswordResullt = await userManager.ResetPasswordAsync(user, viewModel.Token, viewModel.NewPassword);
+                    if (resetPasswordResullt.Succeeded)
+                    {
+                        TempData["message"] = "Đã thay đổi mật khẩu";
+
+
+                        // if the user is signed-in
+                        if (signInManager.IsSignedIn(HttpContext.User))
+                        {
+                            return RedirectToAction(nameof(Profile));
+                        }
+
+
+                        // the user is not signed-in
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        if (resetPasswordResullt.Errors.Any(err => err.Code == "InvalidToken"))
+                        {
+                            TempData["message"] = "E-mail Token đã hết hiệu lực";
+                            return View(viewModel);
+                        }
+
+                        if (resetPasswordResullt.Errors.Any(err => err.Code == "PasswordTooShort"))
+                        {
+                            TempData["message"] = "Mật khẩu ít nhất 6 kí tự";
+                            return View(viewModel);
+                        }
+
+
+                        TempData["message"] = "Có lỗi trong quá trình xử lý";
+                        return View(viewModel);
+                    }
+                }
+
+
+                TempData["message"] = "Người dùng không tồn tại";
+                return RedirectToAction("Index", "Home");
+            }
+
+
+
+            TempData["message"] = "Vui lòng nhập đủ thông tin";
+            return View(viewModel);
+        }
+        #endregion
+
+
+        #region Reset Password without Signed-in
+        [AllowAnonymous]
+        public IActionResult DoResetPassword()
+        {
+            ViewBag.Email = null;
+            return View();
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> DoResetPassword(string email)
+        {
+            ViewBag.Email = email;
+
+
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByEmailAsync(email);
+                if (user != null)
+                {
+                    try
+                    {
+                        await sendResetPasswordEmail(user);
+                        TempData["message"] = "Vui lòng kiểm tra E-mail để Reset";
+                        return RedirectToAction(nameof(Login));
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["message"] = "Có lỗi trong quá trình xử lý";
+                        return View();
+                    }
+                }
+
+
+                TempData["message"] = "E-mail chưa được Đăng ký";
+                return View();
+            }
+
+
+            TempData["message"] = "Vui lòng nhập đủ thông tin";
+            return View();
         }
         #endregion
 
     }
 }
+ 

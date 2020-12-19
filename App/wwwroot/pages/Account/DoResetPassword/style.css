@@ -1,0 +1,43 @@
+﻿
+
+form {
+    background: rgba(255, 255, 255, 0.90);
+    backdrop-filter: blur(20px);
+    padding: 35px 0 50px;
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+
+    justify-content: center;
+    align-items: center;
+
+    margin: auto;
+    height: 100%;
+}
+
+.form-control, .btn {
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    padding: 15px;
+}
+
+.form-control {
+    width: 575px;
+}
+
+
+
+input[type=submit] {
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #019010;
+    color: white;
+    display: inline-table;
+}
+
+input[type=submit]:hover {
+    transition: all .15s ease-in-out;
+    background-color: rgba(1, 144, 16, 0.55);
+}

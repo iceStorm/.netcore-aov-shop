@@ -1,4 +1,8 @@
 ﻿@model UserAccount
+@{
+    ViewBag.Title = "Hồ sơ Cá nhân";
+}
+
 
 
 <div id="profile-container">
@@ -15,17 +19,21 @@
                 <input class="form-control filepond" type="file" />
             </div>
 
-            <input class="form-control" asp-for="SurName" placeholder="Họ" required 
+            <input class="form-control" asp-for="SurName" placeholder="Họ" required
                    oninvalid="javascript: setCustomValidity('Vui lòng nhập Họ');"
                    oninput="javascript: setCustomValidity('');" />
 
             <input class="form-control" asp-for="FirstName" placeholder="Tên đệm và Tên" required
                    oninvalid="javascript: setCustomValidity('Vui lòng nhập Tên đệm và Tên');"
-                   oninput="javascript: setCustomValidity('');"/>
+                   oninput="javascript: setCustomValidity('');" />
 
             <input class="form-control" type="email" asp-for="Email" readonly />
 
-            <input class="form-control" type="submit" id="btn-save-changes" value="Lưu thay đổi" />
+
+            <div>
+                <a class="btn" id="btn-change-password" asp-action="ChangePassword">Đổi mật khẩu</a>
+                <input class="btn" type="submit" id="btn-save-changes" value="Lưu thay đổi" />
+            </div>
         </form>
     </div>
 </div>

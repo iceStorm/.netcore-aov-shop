@@ -1,0 +1,38 @@
+﻿
+
+form {
+    padding: 35px 0 50px;
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.form-control, .btn {
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    padding: 15px;
+}
+
+.form-control {
+    width: 575px;
+}
+
+
+
+input[type=submit] {
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #ff6161;
+    color: white;
+    display: inline-table;
+}
+
+input[type=submit]:hover {
+    transition: all .15s ease-in-out;
+    background-color: rgba(255, 97, 97, 0.72);
+}
