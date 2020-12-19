@@ -1,0 +1,18 @@
+﻿@model SignUpViewModel
+@{ 
+    ViewBag.Title = "Thêm tài khoản Admin";
+}
+
+<link href="~/pages/Admin/Add/style.css" rel="stylesheet" />
+
+
+<form method="post" id="add-account-form">
+    <input asp-for="User.SurName" placeholder="Surname" required />
+    <input asp-for="User.FirstName" placeholder="First name" required />
+    <input asp-for="Email" type="email" placeholder="E-mail" required />
+
+    <input asp-for="Password" type="password" placeholder="Password" required pattern="^\d{6,}" />
+    <input asp-for="ConfirmPassword" type="password" placeholder="Confirm password" required pattern="^\d{6,}" />
+
+    <input type="submit" value="Add" />
+</form>

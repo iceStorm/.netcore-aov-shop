@@ -1,4 +1,4 @@
-﻿@model GameAccount
+﻿@model AddGameAccountViewModel
 
 @{
     ViewBag.Title = "Sửa thông tin Tài khoản";
@@ -12,26 +12,28 @@
     <table align="center">
         <tr>
             <td colspan="3">
-                <input type="text" class="form-control" asp-for="RankName" placeholder="Rank" />
-                <input type="number" min="0" class="form-control" asp-for="Price" placeholder="Price" />
+                <select class="form-control" asp-for="RankName" asp-items="@(new SelectList(Model.RanksList, "Name", "Name"))" required>
+                    <option selected disabled hidden>-- Chọn Rank --</option>
+                </select>
+                <input type="number" min="0" class="form-control" asp-for="Price" placeholder="Price" required />
             </td>
         </tr>
 
         <tr>
             <td colspan="3">
-                <input type="text" class="form-control" asp-for="LoginName" placeholder="Login Name" />
-                <input type="password" class="form-control" asp-for="Password" placeholder="Password" value="@Model.Password" />
+                <input type="text" class="form-control" asp-for="LoginName" placeholder="Login Name" required/>
+                <input type="password" class="form-control" asp-for="Password" placeholder="Password" value="@Model.Password" required/>
             </td>
         </tr>
 
         <tr>
-            <td><input type="number" min="0" class="form-control" asp-for="HeroesCount" placeholder="Heroes Count" /></td>
-            <td><input type="number" min="0" class="form-control" asp-for="SkinsCount" placeholder="Skins Count" /></td>
-            <td><input type="number" min="0" class="form-control" asp-for="GoldsCount" placeholder="Golds Count" /></td>
+            <td><input type="number" min="0" class="form-control" asp-for="HeroesCount" placeholder="Heroes Count" required/></td>
+            <td><input type="number" min="0" class="form-control" asp-for="SkinsCount" placeholder="Skins Count" required/></td>
+            <td><input type="number" min="0" class="form-control" asp-for="GoldsCount" placeholder="Golds Count" required/></td>
         </tr>
 
         <tr>
-            <td colspan="3"><textarea rows="10" cols="100" class="form-control" asp-for="ImageUrls" placeholder="Image Urls"></textarea></td>
+            <td colspan="3"><textarea rows="10" cols="100" class="form-control" asp-for="ImageUrls" placeholder="Image Urls" required></textarea></td>
         </tr>
 
 

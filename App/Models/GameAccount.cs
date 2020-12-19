@@ -10,13 +10,15 @@ namespace App.Models
 {
     public class GameAccount
     {
+
         [Key]
+        public int Id { get; set; }
+
+
+
         [Required(ErrorMessage = "Vui lòng nhập Tên đăng nhập cho tài khoản")]
         public string LoginName { get; set; }
 
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
 
 
         [Required(ErrorMessage = "Vui lòng nhập Mật khẩu cho tài khoản")]
@@ -67,11 +69,13 @@ namespace App.Models
 
         public void CopyValues(GameAccount source)
         {
+            LoginName = source.LoginName;
             Price = source.Price;
             Password = source.Password;
             ImageUrls = source.ImageUrls;
             HeroesCount = source.HeroesCount;
             SkinsCount = source.SkinsCount;
+            GoldsCount = source.GoldsCount;
             RankName = source.RankName;
             Rank = source.Rank;
         }

@@ -1,0 +1,50 @@
+﻿
+
+
+table {
+    width: 100%;
+    margin: 30px 0;
+    margin-top: 50px;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+}
+
+table tr td, table tr th {
+    padding: 10px;
+}
+
+table tr:first-child {
+    background-image: radial-gradient( circle 993px at 0.5% 50.5%, rgba(137,171,245,0.37) 0%, rgba(245,247,252,1) 100.2% );
+}
+
+    table tr:first-child th {
+        border-bottom: 1px solid #ddd;
+    }
+
+table tr:not(:first-child):hover {
+    background: rgba(238, 238, 238, 0.68);
+    transition: all .15s ease-in-out;
+}
+
+
+
+table th:first-child, table td:first-child {
+    text-align: right;
+    padding: 0 20px 0 10px;
+}
+
+table td:last-child, table th:last-child {
+    text-align: center;
+    padding: 20px 10px;
+}
+
+
+table td:last-child a {
+    text-decoration: none;
+    padding: 7px 15px;
+    border-radius: 3px;
+    color: white;
+    background: cornflowerblue;
+}

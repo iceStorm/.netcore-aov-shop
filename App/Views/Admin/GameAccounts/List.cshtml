@@ -84,7 +84,8 @@
                 <div>
                     @if (item.UserAccountId != null)
                     {
-                        <a asp-action="buyer" target="_blank" asp-route-buyerId="@item.UserAccountId" class="btn-buyer">Buyer</a>
+                        <a asp-action="delete" asp-route-accId="@item.Id" class="btn-delete">Delete</a>
+                        <a asp-action="buyer" target="_blank" asp-route-userId="@item.UserAccountId" class="btn-buyer">Buyer</a>
                     }
                     else
                     {

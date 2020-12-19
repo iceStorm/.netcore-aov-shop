@@ -35,21 +35,17 @@ namespace App.Controllers
         }
 
 
-        public IActionResult Dashboard()
-        {
-            return View(new DashboardViewModel {
-                GameAccounts = gameAccountRepo.Accounts,
-                ClientAccounts = userAccountRepo.Accounts(Constants.ClientRole)
-            });
-        }
-
-
 
         #region GAME ACCOUNT MANAGING
-        public IActionResult GameAccounts()
+        public IActionResult GameAccounts(string accLoginName = null)
         {
-            return View("GameAccounts/List", gameAccountRepo.Accounts);
+            return View("GameAccounts/List", accLoginName == null ? 
+                gameAccountRepo.Accounts :
+                gameAccountRepo.Accounts.Where(acc => acc.LoginName == accLoginName)
+            );
         }
+
+
 
         public IActionResult Import()
         {
@@ -91,6 +87,8 @@ namespace App.Controllers
             return View("GameAccounts/Import", model);
         }
 
+
+
         public IActionResult Delete(int accId)
         {
             var getAcc = gameAccountRepo.Accounts.Where(acc => acc.Id == accId).FirstOrDefault();
@@ -105,12 +103,19 @@ namespace App.Controllers
             return RedirectToAction(nameof(GameAccounts));
         }
 
+
+
         public IActionResult Edit(int accId)
         {
             var foundAcc = gameAccountRepo.Accounts.Where(acc => acc.Id == accId).FirstOrDefault();
             if (foundAcc != null)
             {
-                return View("GameAccounts/Edit", foundAcc);
+                var viewModel = new AddGameAccountViewModel { RanksList = rankRepo.Ranks };
+                viewModel.CopyValues(foundAcc);
+                viewModel.Id = foundAcc.Id;
+
+                
+                return View("GameAccounts/Edit", viewModel);
             }
 
 
@@ -119,15 +124,18 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(GameAccount model)
+        public IActionResult Edit(AddGameAccountViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var foundAcc = gameAccountRepo.Accounts.FirstOrDefault(acc => acc.LoginName == model.LoginName 
-                    && acc.Id == model.Id && acc.UserAccountId == null);
-                if (foundAcc != null)
+                var isDuplicated = gameAccountRepo.Accounts.FirstOrDefault(acc
+                    => acc.LoginName == viewModel.LoginName
+                        && acc.Id != viewModel.Id);
+
+
+                if (isDuplicated == null)
                 {
-                    gameAccountRepo.SaveGameAccount(model);
+                    gameAccountRepo.SaveGameAccount(viewModel);
                     TempData["message"] = "Cập nhật thành công !";
                     return RedirectToAction(nameof(GameAccounts));
                 }
@@ -138,8 +146,9 @@ namespace App.Controllers
             }
             else
             {
+                viewModel.RanksList = rankRepo.Ranks;
                 TempData["message"] = "Vui lòng nhập đủ thông tin";
-                return View("GameAccounts/Edit", model);
+                return View("GameAccounts/Edit", viewModel);
             }
         }
         #endregion
@@ -150,6 +159,20 @@ namespace App.Controllers
         public async Task<IActionResult> ClientAccounts()
         {
             return View("ClientAccounts/List", userAccountRepo.Accounts(Constants.ClientRole));
+        }
+
+        public IActionResult Buyer(string userId)
+        {
+            var user = userAccountRepo.
+                Accounts(Constants.ClientRole)
+                    .FirstOrDefault(client => client.Id == userId);
+
+            if (user != null)
+                return View(user);
+
+
+            TempData["message"] = "Người dùng không tồn tại";
+            return RedirectToAction(nameof(GameAccounts));
         }
         #endregion
 
@@ -163,6 +186,85 @@ namespace App.Controllers
         }
 
 
+        public IActionResult DetailInfo(string userId)
+        {
+            var user = userAccountRepo.
+                Accounts(Constants.AdminRole)
+                    .FirstOrDefault(ad => ad.Id == userId);
+
+            if (user != null)
+                return View("Buyer", user);
+
+
+            TempData["message"] = "Người dùng không tồn tại";
+            return RedirectToAction(nameof(AdminAccounts));
+        }
+
+
+
+        public IActionResult AddAdmin()
+        {
+            return View("AdminAccounts/Add", new SignUpViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAdmin(SignUpViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByEmailAsync(viewModel.Email);
+                if (user == null)
+                {
+                    viewModel.User.Email = viewModel.Email;
+                    viewModel.User.EmailConfirmed = true;
+
+                    var createResult = await userManager.CreateAsync(viewModel.User, viewModel.Password);
+                    if (createResult.Succeeded)
+                    {
+                        var roleAddingResult = await userManager.AddToRoleAsync(viewModel.User, Constants.AdminRole);
+                        if (roleAddingResult.Succeeded)
+                        {
+                            TempData["message"] = "Đã tạo tài khoản thành công !";
+                            return RedirectToAction(nameof(AdminAccounts));
+                        }
+                    }
+
+                    TempData["message"] = "Có lỗi trong quá trình xử lý";
+                    return View("AdminAccounts/Add", viewModel);
+                }
+
+
+                TempData["message"] = "E-mail đã được Đăng ký";
+                return View("AdminAccounts/Add", viewModel);
+            }
+
+
+            TempData["message"] = "Vui lòng nhập đủ thông tin";
+            return View("AdminAccounts/Add", viewModel);
+        }
+
+
+
+        public IActionResult DeleteAdmin(string userId)
+        {
+            var user = userAccountRepo.Accounts(Constants.AdminRole).FirstOrDefault(acc => acc.Id == userId);
+            if (user != null)
+            {
+                if (userAccountRepo.DeleteAccount(user))
+                {
+                    TempData["message"] = "Đã xoá tài khoản Admin";
+                    return RedirectToAction(nameof(AdminAccounts));
+                }
+
+
+                TempData["message"] = "Có lỗi trong quá trình xử lý";
+                return RedirectToAction(nameof(AdminAccounts));
+            }
+
+
+            TempData["message"] = "Người dùng không tồn tại";
+            return RedirectToAction(nameof(AdminAccounts));
+        }
         #endregion
 
 

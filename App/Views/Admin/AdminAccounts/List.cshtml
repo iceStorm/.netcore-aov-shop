@@ -1,7 +1,61 @@
 ﻿@model IEnumerable<UserAccount>
-
-
-@foreach (var item in Model)
-{
-    <h1>@item.Email</h1>
+@inject UserManager<UserAccount> userManager
+@{
+    ViewBag.Title = "Tài khoản Admin";
 }
+
+<link href="~/pages/Admin/Accounts/style.css" rel="stylesheet" />
+<script src="~/pages/Admin/Accounts/script.js"></script>
+
+
+<div class="accounts-container">
+
+    <p>
+        <a asp-action="AddAdmin">Add an Admin Account</a>
+    </p>
+
+
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Surname</th>
+            <th>First name</th>
+            <th>E-mail</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+
+
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="6">Chưa có dữ liệu.</td>
+            </tr>
+        }
+
+
+        @{
+            var counter = 1;
+        }
+        @foreach (var item in Model)
+        {
+            var role = ((await userManager.GetRolesAsync(item))[0]);
+
+            <tr>
+                <td>@counter</td>
+                <td>@item.SurName</td>
+                <td>@item.FirstName</td>
+                <td>@item.Email</td>
+                <td><span role="@role">@role</span></td>
+                <td>
+                    <div>
+                        <a asp-action="DeleteAdmin" asp-route-userId="@item.Id" class="btn-delete" id="btn-delete">Delete</a>
+                        <a asp-action="DetailInfo" asp-route-userId="@item.Id" target="_blank" class="btn-view">View</a>
+                    </div>
+                </td>
+            </tr>
+
+            counter++;
+        }
+    </table>
+</div>

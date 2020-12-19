@@ -36,7 +36,7 @@ namespace App.Repositories
 
         public void SaveGameAccount(GameAccount account)
         {
-            var accEntry = dbContext.GameAccounts.FirstOrDefault(acc => acc.LoginName == account.LoginName);
+            var accEntry = dbContext.GameAccounts.FirstOrDefault(acc => acc.Id == account.Id);
             if (accEntry != null)
             {
                 accEntry.CopyValues(account);

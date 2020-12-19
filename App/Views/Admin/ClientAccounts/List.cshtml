@@ -1,8 +1,46 @@
 ﻿@model IEnumerable<UserAccount>
-
-
-
-@foreach (var item in Model)
-{
-    <h1>@item.Email</h1>
+@{
+    ViewBag.Title = "Danh sách Khách hàng";
 }
+
+<link href="~/pages/Admin/Clients/style.css" rel="stylesheet" />
+
+
+<table>
+    <tr>
+        <th>#</th>
+        <th>Surname</th>
+        <th>First name</th>
+        <th>E-mail</th>
+        <th>Boughts</th>
+        <th>Spent</th>
+        <th>Actions</th>
+    </tr>
+
+
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td colspan="6">Chưa có dữ liệu.</td>
+        </tr>
+    }
+
+
+    @{ 
+        var counter = 1;
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@counter</td>
+            <td>@item.SurName</td>
+            <td>@item.FirstName</td>
+            <td>@item.Email</td>
+            <td>@item.BoughtAccounts.Count()</td>
+            <td>@String.Format("{0:n0}", @item.BoughtAccounts.Sum(acc => acc.Price)) <sup>đ</sup></td>
+            <td><a asp-action="Buyer" asp-route-userId="@item.Id" target="_blank">View</a></td>
+        </tr>
+
+        counter++;
+    }
+</table>

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201209172950_v9")]
-    partial class v9
+    [Migration("20201219145439_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,12 +27,6 @@ namespace App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
-
-                    b.Property<int>("GemStonesCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GemsCount")
-                        .HasColumnType("int");
 
                     b.Property<int>("GoldsCount")
                         .HasColumnType("int");
@@ -59,17 +53,8 @@ namespace App.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("RankStartsCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RubiesCount")
-                        .HasColumnType("int");
-
                     b.Property<int>("SkinsCount")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Sold")
-                        .HasColumnType("bit");
 
                     b.Property<string>("UserAccountId")
                         .HasColumnType("nvarchar(450)");
@@ -148,9 +133,6 @@ namespace App.Migrations
                     b.Property<string>("SurName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TotalMoney")
-                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -311,9 +293,11 @@ namespace App.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("App.Models.UserAccount", null)
+                    b.HasOne("App.Models.UserAccount", "Buyer")
                         .WithMany("BoughtAccounts")
                         .HasForeignKey("UserAccountId");
+
+                    b.Navigation("Buyer");
 
                     b.Navigation("Rank");
                 });

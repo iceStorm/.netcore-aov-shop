@@ -1,0 +1,31 @@
+﻿
+
+form[id=add-account-form] {
+    padding: 35px 0 50px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 15px;
+}
+
+form[id=add-account-form] input {
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    width: 575px;
+}
+
+
+input[type=submit] {
+    margin-top: 30px;
+    cursor: pointer;
+    background-color: #00aa16;
+    color: white;
+}
+input[type=submit]:hover {
+    transition: all .15s ease-in-out;
+    background-color: rgba(0, 170, 22, 0.79);
+}

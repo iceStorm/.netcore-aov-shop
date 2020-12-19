@@ -24,17 +24,18 @@ namespace App.Repositories.DbContexts
         }
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             // ignore the Id field from updating...
             modelBuilder.Entity<GameAccount>(builder =>
             {
-                builder.Property(e => e.Id).ValueGeneratedOnAdd()
-                    .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore); // <--
+                builder
+                    .Property(e => e.Id).ValueGeneratedOnAdd()
+                        .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
             });
-        }
+        }*/
 
 
 

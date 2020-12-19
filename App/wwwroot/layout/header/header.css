@@ -32,6 +32,19 @@
   #header #btn-login:active {
     background-color: #488bff60; }
 
+#header #search-bar {
+  background: rgba(255, 255, 255, 0.767);
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 50px; }
+  #header #search-bar input {
+    border: none;
+    padding: 0 10px 0;
+    width: 300px;
+    background: transparent; }
+    #header #search-bar input::placeholder {
+      color: #c5c5c5; }
+
 #header #category-menu {
   display: flex;
   flex-direction: row;

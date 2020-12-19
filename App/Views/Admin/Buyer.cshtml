@@ -1,0 +1,26 @@
+﻿@model UserAccount
+@{
+    ViewBag.Title = "Hồ sơ Người dùng";
+}
+
+
+
+<div id="profile-container">
+
+    <div class="avatar-container">
+        <img src="@(Model.AvatarUrl != null ? Url.Content("~/" + Model.AvatarUrl) : Url.Content("~/images/user-avatars/default-user.png"))" alt="avatar" />
+    </div>
+
+
+    <div class="info-container">
+        <form asp-action="Profile">
+            <input class="form-control" asp-for="SurName" placeholder="Họ" readonly disabled />
+            <input class="form-control" asp-for="FirstName" placeholder="Tên đệm và Tên" readonly disabled />
+            <input class="form-control" type="email" asp-for="Email" readonly disabled />
+        </form>
+    </div>
+</div>
+
+
+
+<link href="~/pages/Account/Profile/style.css" rel="stylesheet" />

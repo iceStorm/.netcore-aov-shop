@@ -26,8 +26,10 @@ namespace App.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TotalMoney = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    SurName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AvatarUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -40,10 +42,7 @@ namespace App.Migrations
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false),
-                    SurName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AvatarUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,13 +53,11 @@ namespace App.Migrations
                 name: "Ranks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ranks", x => x.Id);
+                    table.PrimaryKey("PK_Ranks", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,49 +167,37 @@ namespace App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Accounts",
+                name: "GameAccounts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Sold = table.Column<bool>(type: "bit", nullable: false),
+                    LoginName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
                     ImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GemsCount = table.Column<int>(type: "int", nullable: false),
-                    GemStonesCount = table.Column<int>(type: "int", nullable: false),
                     GoldsCount = table.Column<int>(type: "int", nullable: false),
-                    RubiesCount = table.Column<int>(type: "int", nullable: false),
-                    HerosCount = table.Column<int>(type: "int", nullable: false),
+                    HeroesCount = table.Column<int>(type: "int", nullable: false),
                     SkinsCount = table.Column<int>(type: "int", nullable: false),
-                    RankId = table.Column<int>(type: "int", nullable: false),
-                    RankStartsCount = table.Column<int>(type: "int", nullable: false),
-                    ClientAccountId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    RankName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserAccountId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Accounts", x => x.Id);
+                    table.PrimaryKey("PK_GameAccounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Accounts_AspNetUsers_ClientAccountId",
-                        column: x => x.ClientAccountId,
+                        name: "FK_GameAccounts_AspNetUsers_UserAccountId",
+                        column: x => x.UserAccountId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Accounts_Ranks_RankId",
-                        column: x => x.RankId,
+                        name: "FK_GameAccounts_Ranks_RankName",
+                        column: x => x.RankName,
                         principalTable: "Ranks",
-                        principalColumn: "Id",
+                        principalColumn: "Name",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Accounts_ClientAccountId",
-                table: "Accounts",
-                column: "ClientAccountId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Accounts_RankId",
-                table: "Accounts",
-                column: "RankId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -252,13 +237,20 @@ namespace App.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameAccounts_RankName",
+                table: "GameAccounts",
+                column: "RankName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameAccounts_UserAccountId",
+                table: "GameAccounts",
+                column: "UserAccountId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Accounts");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -275,13 +267,16 @@ namespace App.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Ranks");
+                name: "GameAccounts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Ranks");
         }
     }
 }
