@@ -14,6 +14,8 @@ namespace App.Models
 
         public int CurrentPageIndex { get; set; }
 
+        public int CurrentRankId { get; set; }
+
         public int TotalPages => (int)Math.Ceiling((decimal)TotalItems / ItemsPerPage);
 
     }

@@ -11,7 +11,7 @@
     <table align="center">
         <tr>
             <td colspan="3">
-                <select class="form-control" asp-for="RankName" asp-items="@(new SelectList(Model.RanksList, "Name", "Name"))" required>
+                <select class="form-control" asp-for="RankId" asp-items="@(new SelectList(Model.RanksList, "Id", "Name"))" required>
                     <option selected disabled hidden>-- Chọn Rank --</option>
                 </select>
                 <input type="number" min="0" class="form-control" asp-for="Price" placeholder="Price" required />

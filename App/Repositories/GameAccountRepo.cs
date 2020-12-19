@@ -20,7 +20,7 @@ namespace App.Repositories
 
 
 
-        public IQueryable<GameAccount> Accounts => dbContext.GameAccounts;
+        public IQueryable<GameAccount> Accounts => dbContext.GameAccounts.Include(acc => acc.Rank);
 
         public bool DeleteGameAccount(string loginName)
         {

@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructures\Extensions\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\images\game-account-photos\" />
     <Folder Include="wwwroot\images\rank-photos\" />

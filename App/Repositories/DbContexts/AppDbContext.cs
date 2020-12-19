@@ -150,7 +150,7 @@ namespace App.Repositories.DbContexts
 
         private static void SeedGameAccounts(IServiceProvider services)
         {
-            using (var context = services.GetRequiredService<AppDbContext>())
+            /*using (var context = services.GetRequiredService<AppDbContext>())
             {
                 if (!context.GameAccounts.Any())
                 {
@@ -210,7 +210,7 @@ namespace App.Repositories.DbContexts
                 }
 
                 context.SaveChanges();
-            }
+            }*/
         }
 
 

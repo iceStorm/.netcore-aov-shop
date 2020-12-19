@@ -33,6 +33,10 @@ namespace App.Infrastructures
         public string PagingAction { get; set; }
 
 
+        [HtmlAttributeName(name: "paging-rank")]
+        public Dictionary<string, int> PageUrlValues { get; set; } = new Dictionary<string, int>();
+
+
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {

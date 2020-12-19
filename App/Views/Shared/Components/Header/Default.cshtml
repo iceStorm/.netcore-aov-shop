@@ -3,14 +3,14 @@
 
 <div id="header">
 
-    <a id="logo" asp-controller="Home" asp-action="Index">
+    <a id="logo" href="@Url.AbsoluteContent("~/")">
         <img src="~/logo.png" />
     </a>
 
 
     <ul id="category-menu">
         <li class="category-item">
-            <a class="category-link" asp-controller="Home" asp-action="Index">
+            <a class="category-link" href="@Url.AbsoluteContent("~/")">
                 <label>Trang Chủ</label>
             </a>
         </li>

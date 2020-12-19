@@ -11,8 +11,12 @@ namespace App.Models
     public class Rank
     {
         [Key]
+        public int? Id { get; set; }
+
+
         [Required (ErrorMessage = "Vui lòng nhập tên Rank")]
         public string Name { get; set; }
+
 
         public void CopyValues(Rank source)
         {

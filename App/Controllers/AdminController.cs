@@ -57,7 +57,7 @@ namespace App.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (rankRepo.Ranks.FirstOrDefault(r => r.Name == model.RankName) == null)
+                if (rankRepo.Ranks.FirstOrDefault(r => r.Id == model.RankId) == null)
                 {
                     model.RanksList = rankRepo.Ranks;
                     TempData["message"] = "Rank không hợp lệ";

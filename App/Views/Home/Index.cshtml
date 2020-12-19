@@ -24,7 +24,7 @@
 
             <img class="acc-thumbnail" src="@(item.ImageUrls.Split('\n')[0])" />
             <div class="acc-info">
-                <p class="acc-price"><span>@String.Format("{0:n0}", item.Price)<sup>đ</sup></span> • <span>@item.RankName</span></p>
+                <p class="acc-price"><span>@String.Format("{0:n0}", item.Price)<sup>đ</sup></span> • <span>@item.Rank.Name</span></p>
                 <table>
                     <tr>
                         <td><img class="title-icon" src="https://colienquan.garena.vn/uploads/arena-of-valor/originals/d93b15f7-f8b3-481e-9e17-748bf91f2a8f.png" />Tướng: @item.HeroesCount</td>
@@ -47,5 +47,8 @@
 
 
 <div class="paging-container">
-    <div class="pagination" paging-model="@Model.PagingInfo" paging-action="Index"></div>
+    <div class="pagination" 
+         paging-model="@Model.PagingInfo" 
+         paging-action="Index"
+         paging-rankId="@Model.PagingInfo.CurrentRankId"></div>
 </div>

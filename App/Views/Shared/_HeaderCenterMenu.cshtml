@@ -27,19 +27,19 @@
                     <li class="sub-menu-item">
                         <ul class="sub-menu-item-column">
                             <li>Tân thủ</li>
-                            <li><a href="">Đồng</a></li>
-                            <li><a href="">Bạc</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-rankId="2">Đồng</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-rankId="3">Bạc</a></li>
                         </ul>
                         <ul class="sub-menu-item-column">
                             <li>Trung cấp</li>
-                            <li><a href="">Vàng</a></li>
-                            <li><a href="">Bạch Kim</a></li>
-                            <li><a href="">Kim Cương</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-rankId="4">Vàng</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-rankId="5">Bạch Kim</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-rankId="6">Kim Cương</a></li>
                         </ul>
                         <ul class="sub-menu-item-column">
                             <li>Thành thạo</li>
-                            <li><a href="">Tinh Anh</a></li>
-                            <li><a href="">Cao Thủ</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-rankId="7">Tinh Anh</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-rankId="8">Cao Thủ</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -53,23 +53,23 @@
                     <li class="sub-menu-item">
                         <ul class="sub-menu-item-column">
                             <li>Rẻ</li>
-                            <li><a href="">Dưới 50.000đ</a></li>
-                            <li><a href="">Từ 50.000đ - 100.000đ</a></li>
-                            <li><a href="">Từ 100.000đ - 200.000đ</a></li>
-                            <li><a href="">Từ 200.000đ - 300.000đ</a></li>
+                            <li><a asp-controller="Home" asp-action="Price" asp-route-from="0" asp-route-to="50000">Dưới 50.000đ</a></li>
+                            <li><a asp-controller="Home" asp-action="Price" asp-route-from="50001" asp-route-to="100000">Từ 50.000đ - 100.000đ</a></li>
+                            <li><a asp-controller="Home" asp-action="Price" asp-route-from="100001" asp-route-to="200000">Từ 100.000đ - 200.000đ</a></li>
+                            <li><a asp-controller="Home" asp-action="Price" asp-route-from="200001" asp-route-to="300000">Từ 200.000đ - 300.000đ</a></li>
                         </ul>
                         <ul class="sub-menu-item-column">
                             <li>Trung bình</li>
-                            <li><a href="">Từ 300.000đ - 400.000đ</a></li>
-                            <li><a href="">Từ 400.000đ - 500.000đ</a></li>
-                            <li><a href="">Từ 500.000đ - 600.000đ</a></li>
+                            <li><a asp-controller="Home" asp-action="Price" asp-route-from="300001" asp-route-to="400000">Từ 300.000đ - 400.000đ</a></li>
+                            <li><a asp-controller="Home" asp-action="Price" asp-route-from="400001" asp-route-to="500000">Từ 400.000đ - 500.000đ</a></li>
+                            <li><a asp-controller="Home" asp-action="Price" asp-route-from="500001" asp-route-to="600000">Từ 500.000đ - 600.000đ</a></li>
                         </ul>
                         <ul class="sub-menu-item-column">
                             <li>Cao</li>
-                            <li><a href="">Từ 600.000đ - 700.000đ</a></li>
-                            <li><a href="">Từ 700.000đ - 800.000đ</a></li>
-                            <li><a href="">Từ 800.000đ - 900.000đ</a></li>
-                            <li><a href="">Từ 1.000.000đ</a></li>
+                            <li><a asp-controller="Home" asp-action="Price" asp-route-from="600001" asp-route-to="700000">Từ 600.000đ - 700.000đ</a></li>
+                            <li><a asp-controller="Home" asp-action="Price" asp-route-from="700001" asp-route-to="800000">Từ 700.000đ - 800.000đ</a></li>
+                            <li><a asp-controller="Home" asp-action="Price" asp-route-from="800001" asp-route-to="1000000">Từ 800.000đ - 1.000.000đ</a></li>
+                            <li><a asp-controller="Home" asp-action="Price" asp-route-from="1000001" asp-route-to="9999999999">Trên 1.000.000đ</a></li>
                         </ul>
                     </li>
                 </ul>

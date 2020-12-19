@@ -34,13 +34,19 @@ function onChange(event) {
 }
 
 function onReaderLoad(event) {
-    /*console.log(event.target.result);*/
+    console.log(event.target.result);
     var obj = JSON.parse(event.target.result);
     assignData(obj);
 }
 
 function assignData(obj) {
-    $('#RankName').val(obj.rank);
+    $('#RankId > option').each(function (index, elem) {
+        if ($(this).text() == obj.rank) {
+            $(this).prop('selected', true);
+            return;
+        }
+    });
+
     $('#Price').val(obj.cash);
     $('#LoginName').val(obj.loginName);
     $('#Password').val('TempPassword');

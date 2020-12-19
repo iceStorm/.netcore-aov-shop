@@ -53,7 +53,7 @@ namespace App.Models
 
         [Required(ErrorMessage = "Vui lòng chọn Rank")]
         [ForeignKey (nameof(Rank))]
-        public string RankName { get; set; }
+        public int RankId { get; set; }
 
         [BindNever]
         public Rank Rank { get; set; }
@@ -76,7 +76,7 @@ namespace App.Models
             HeroesCount = source.HeroesCount;
             SkinsCount = source.SkinsCount;
             GoldsCount = source.GoldsCount;
-            RankName = source.RankName;
+            RankId = source.RankId;
             Rank = source.Rank;
         }
 
