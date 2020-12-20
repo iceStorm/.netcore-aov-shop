@@ -29,11 +29,10 @@ ul {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  transition: all .55s ease-in-out;
   padding: 0px var(--paddingX);
   min-height: 65px;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.075);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: saturate(180%) blur(20px); }
 
 #header #logo > img {
