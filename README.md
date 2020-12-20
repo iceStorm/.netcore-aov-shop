@@ -5,5 +5,5 @@
 ## Dự án ASP.NET Core MVC / Shopping-App
 ## https://aov-shop.tk/
 
-## Hosting provider: https://somee.com/default.aspx
+## Windows Server Hosting & MS SQL Database provider: https://somee.com/default.aspx
 ## Domain provider: https://www.freenom.com/
