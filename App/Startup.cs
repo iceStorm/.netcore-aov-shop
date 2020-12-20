@@ -99,8 +99,8 @@ namespace App
 
 
             app.UseMvc(routes => {
-                routes.MapRoute(name: null, template: "Rank{rankId:int}", defaults: new { controller = "Home", action = "Index" });
                 routes.MapRoute(name: null, template: "Rank{rankId:int}/Page{pageIndex:int}", defaults: new { controller = "Home", action = "Index" });
+                routes.MapRoute(name: null, template: "Rank{rankId:int}", defaults: new { controller = "Home", action = "Index" });
                 routes.MapRoute(name: null, template: "Page{pageIndex:int}", defaults: new { controller = "Home", action = "Index", pageIndex = 1 });
 
                 routes.MapRoute(name: null, template: "Price_From{from:int}_To{to:int}", defaults: new { controller = "Home", action = "Price" });
