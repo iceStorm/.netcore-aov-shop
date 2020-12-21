@@ -158,7 +158,7 @@ namespace App.Controllers
         #region CLIENT ACCOUNT MANAGING
         public async Task<IActionResult> ClientAccounts()
         {
-            return View("ClientAccounts/List", userAccountRepo.Accounts(Constants.ClientRole));
+            return View("ClientAccounts/List", userAccountRepo.Accounts(Constants.ClientRole).Where(client => client.EmailConfirmed == true));
         }
 
         public IActionResult Buyer(string userId)

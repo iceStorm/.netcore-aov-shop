@@ -33,19 +33,11 @@
 
 
     <div class="acc-photos-container">
-        @{ var counter = 0; }
         @foreach (var item in Model.ImageUrls.Split('\n').Skip(1))
         {
-            <div class="bounder"
-                 data-aos="fade-up"
-                 data-aos-offset="75"
-                 data-aos-delay="@(counter)"
-                 data-aos-duration="750"
-                 data-aos-easing="ease-out-back">
+            <div class="bounder">
                 <img src="@item" />
             </div>
-
-            counter += 150;
         }
     </div>
 
