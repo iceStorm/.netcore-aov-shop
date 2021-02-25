@@ -1,5 +1,7 @@
 .vs
 App/bin
 App/obj
+App/appsettings.json
+App/appsettings.*.json
 UnitTester/obj
 UnitTester/bin
