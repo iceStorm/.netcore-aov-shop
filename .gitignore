@@ -5,3 +5,4 @@ App/appsettings.json
 App/appsettings.*.json
 UnitTester/obj
 UnitTester/bin
+Dockerfile
