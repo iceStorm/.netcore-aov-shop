@@ -1,1 +1,1 @@
-This project provides mock data (game accounts) by Scrapping from "https://shopmobaviet.net".
+This project provides mock data (game accounts) by scrapping from "https://shopmobaviet.net".
